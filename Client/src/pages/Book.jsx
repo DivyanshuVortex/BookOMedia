@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSearch } from "../contexts/SearchContext";
-import Navbar from "../components/Navbar";
 import AnimatedButtons from "../components/AnimatedButtons";
 import BackGround from "../assets/BackGround(hero).mp4";
 
@@ -79,8 +78,6 @@ const Book = () => {
         playsInline
         className="absolute top-0 left-0 w-full h-full object-cover opacity-30 -z-10"
       />
-
-      <Navbar />
 
       <div className="w-auto mx-auto px-4 pt-16 pb-20">
         <div className="flex flex-col md:flex-row gap-6 justify-evenly bg-[#0e0e20a6] border border-gray-700 rounded-xl shadow-lg p-6">

@@ -1,31 +1,46 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 import AnimatedButton from "../components/AnimatedButtons";
 
 const Contact = () => {
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <Navbar />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
-        {/* Left Section - Info and Form */}
+    <div className="relative min-h-screen text-white overflow-hidden">
+      {/* 🔁 Background Video */}
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        autoPlay
+        loop
+        muted
+      >
+        <source
+          src="https://cdn.pixabay.com/video/2021/07/30/83274-581386222_large.mp4"
+          //src="https://cdn.pixabay.com/video/2019/10/19/28067-367411324_large.mp4"
+          //src="https://cdn.pixabay.com/video/2022/05/27/118363-714645707_large.mp4"
+          type="video/mp4"
+        />
+        Your browser does not support the video tag.
+      </video>
+
+      {/* 🔳 Overlay with blur */}
+      <div className="absolute top-0 left-0 w-full h-full bg-black/40 backdrop-blur-sm z-0"></div>
+
+      {/* 📦 Main Content */}
+      <div className="relative z-10 flex justify-center items-center p-8">
+        {/* Left Section */}
         <div>
           <h2 className="text-4xl font-bold mb-4">Get in Touch</h2>
           <p className="text-lg mb-6">
-            <p className="text-lg mb-6">
-              Have questions, suggestions, or want to collaborate? <br /> <br />
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <AnimatedButton text={"GitHub"} />
-              </a>
-            </p>
-
-            <span className="block mt-2 font-semibold text-blue-400">
+            Have questions, suggestions, or want to collaborate? <br /> <br />
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <AnimatedButton text={"GitHub"} />
+            </a>
+            <span className="block mt-4 font-semibold text-blue-400">
               divyanshuchandra9027@example.com
             </span>
-            <span className="block text-sm text-gray-400">+91 9027832361</span>
+            <span className="block text-sm text-gray-300">+91 9027832361</span>
           </p>
 
           <form className="space-y-4">
@@ -39,7 +54,7 @@ const Contact = () => {
               <input
                 type="text"
                 id="name"
-                placeholder="eg. John Show "
+                placeholder="eg. John Show"
                 className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
@@ -60,20 +75,11 @@ const Contact = () => {
             </div>
             <button
               type="submit"
-              className="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white font-semibold"
+              className="px-6 py-2 bg-blue-800 hover:bg-blue-500 rounded-lg text-white font-semibold"
             >
               Submit
             </button>
           </form>
-        </div>
-
-        {/* Right Section - Image */}
-        <div className="flex items-center justify-center">
-          <img
-            src="https://www.svgrepo.com/show/415825/contact-headset-communication.svg"
-            alt="Contact Vector"
-            className="w-full max-w-md"
-          />
         </div>
       </div>
     </div>

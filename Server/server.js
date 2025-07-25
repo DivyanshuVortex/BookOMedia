@@ -2,6 +2,7 @@ import axios from 'axios';
 import express from 'express';
 import cors from 'cors'
 import { googleBooks } from './api/googleBook.js';
+import routeauth from './Routes/route.auth.js';
 import dotenv from 'dotenv';
 import mongoConnect from './Database/mongoConnect.js';
 dotenv.config();
@@ -13,6 +14,7 @@ mongoConnect();
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use('/api/user' , routeauth) ;
 
 
 app.get('/search', async (req, res) => {
