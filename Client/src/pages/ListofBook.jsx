@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSearch } from '../contexts/SearchContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
 
 const ListofBook = () => {
   const { searchData, setBookId } = useSearch();
@@ -56,7 +55,6 @@ const ListofBook = () => {
 
   return (
     <div className="min-h-screen">
-      <Navbar />
       <div className="p-6 mt-10">
         {books.length === 0 ? (
           <p className="text-center text-white text-lg">No books found.</p>

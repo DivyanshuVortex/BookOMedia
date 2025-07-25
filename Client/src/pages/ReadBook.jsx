@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
 import { useSearch } from "../contexts/SearchContext";
 import { useParams } from "react-router-dom";
 
@@ -32,7 +31,6 @@ const ReadBook = () => {
   if (!finalBookId) {
     return (
       <div>
-        <Navbar />
         <div className="text-center text-red-500 mt-10 text-xl">
           ❌ Error: No book ID provided. Please go back and try again.
         </div>

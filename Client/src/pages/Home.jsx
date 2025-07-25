@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { useSearch } from "../contexts/SearchContext";
 import Hero from "../components/Hero";
 import BackGround from "../assets/BackGround(hero).mp4";
-import Navbar from "../components/Navbar";
-
 const books = [
   {
     id: "wrOQLV6xB-wC",
@@ -67,7 +65,6 @@ const Home = () => {
         playsInline
         className="absolute top-0 left-0 w-full h-full object-cover opacity-30 -z-10"
       ></video>
-      <Navbar />
       <Hero />
 
       {/* Recommended Reads */}

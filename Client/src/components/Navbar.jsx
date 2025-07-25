@@ -13,7 +13,7 @@ const Navbar = () => {
 
   return (
    <div>
-     <nav className="bg-[#0e0e20a6] text-white px-6 py-4 shadow-md flex justify-between items-center">
+     <nav className="bg-[#0e0e20a6] text-white px-6 py-4 shadow-md flex justify-between items-center w-full">
       {/* Logo */}
       <div className="text-2xl font-bold cursor-pointer" onClick={() => handleNavigation("/")}>
         BookVerse

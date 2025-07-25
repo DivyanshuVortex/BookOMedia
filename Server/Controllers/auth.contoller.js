@@ -20,10 +20,10 @@ export const signup = async (req, res) => {
 
 // SIGNIN
 export const signin = async (req, res) => {
-  const { name, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const existingUser = await User.findOne({ name });
+    const existingUser = await User.findOne({ email });
 
     if (!existingUser) {
       return res.status(404).json({ message: 'User not found' });
