@@ -1,0 +1,86 @@
+import axios from 'axios';
+import express from 'express';
+import cors from 'cors'
+import { googleBooks } from './api/googleBook.js';
+import dotenv from 'dotenv';
+import mongoConnect from './Database/mongoConnect.js';
+dotenv.config();
+
+
+mongoConnect();
+
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+
+app.get('/search', async (req, res) => {
+    const query = req.query?.title || 'Hobby';
+    try {
+        const resp = await googleBooks(query);
+        const books = resp.data.items.map(item => {
+            const info = item.volumeInfo;
+            return {
+                id : item.id,// top level then others
+                title: info.title,
+                authors: info.authors,
+                description: info.description,
+                thumbnail: info.imageLinks?.thumbnail,
+                previewLink: info.previewLink,
+                infoLink: info.infoLink,
+                pageCount: info.pageCount,
+                categories: info.categories,
+                publishedDate: info.publishedDate,
+                language: info.language
+            };
+        });
+        res.json(books);
+    } catch (error) {
+        console.error("Error:", error.message);
+        res.status(500).json({ error: 'Failed(google books) to fetch data' });
+    }
+});
+
+
+app.get("/book/:bookId", async (req, res) => {
+  const bookId = req.params?.bookId;
+
+  try {
+    const response = await axios.get(
+      `https://www.googleapis.com/books/v1/volumes/${bookId}`
+    );
+
+    const info = response.data.volumeInfo;
+
+    if (!info) {
+      return res.status(404).json({ error: "Book not found" });
+    }
+
+    res.json({
+      id: response.data.id,
+      title: info.title,
+      authors: info.authors,
+      description: info.description,
+      thumbnail: info.imageLinks?.thumbnail,
+      previewLink: info.previewLink,
+      infoLink: info.infoLink,
+      pageCount: info.pageCount,
+      categories: info.categories,
+      publishedDate: info.publishedDate,
+      language: info.language,
+    });
+  } catch (error) {
+    console.error("Error fetching book:", error.message);
+    res.status(500).json({
+      error: "Failed to fetch book",
+      details: error.message,
+    });
+  }
+});
+
+
+
+app.listen(3000, () => {
+    console.log('Server started on port 3000');
+});
