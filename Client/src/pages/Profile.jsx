@@ -1,13 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/LoginContext';
+import AnimatedButton from '../components/AnimatedButtons'
 const Profile = () => {
   const navigate = useNavigate();
 
-  const { login } = useAuth();
+  const { login, setLogin , user : BEuser, token } = useAuth();
   const user = {
-    name: 'Divyanshu',
-    email: 'divyanshu@example.com',
+    name: BEuser.name || 'User-Name',
+    email: BEuser.email || 'User-Email',
     bookmarkedBooks: [
       {
         id: 1,
@@ -36,6 +37,13 @@ const Profile = () => {
   const handleSignIn = () => navigate('/signin');
   const handleSignUp = () => navigate('/signup');
 
+  const handlelogout = ()=>{
+     console.log(user , "Logout");
+    setLogin(false);
+    console.log("Token :" , token )
+   localStorage.removeItem("token");
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="max-w-5xl mx-auto px-4 py-10">
@@ -51,6 +59,11 @@ const Profile = () => {
               />
               <p><strong>Name:</strong> {user.name}</p>
               <p><strong>Email:</strong> {user.email}</p>
+              <br />
+              <hr />
+              <AnimatedButton text={'Logout'} className='w-[50vw] m-5' onClick={handlelogout}/>
+              <hr />
+
             </div>
           ) : (
             <div className="text-center text-gray-400 mb-6">You are not signed in.</div>

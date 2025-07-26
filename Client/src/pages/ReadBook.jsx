@@ -41,7 +41,6 @@ const ReadBook = () => {
   if (isLoading) {
     return (
       <div>
-        <Navbar />
         <div className="flex flex-col items-center justify-center w-full h-screen bg-gray-900">
           <div className="relative w-32 h-32">
             <div className="absolute inset-0 rounded-full border-4 border-dashed border-white animate-spin" />
@@ -59,8 +58,6 @@ const ReadBook = () => {
 
   return (
     <div>
-      <Navbar />
-
       <div className="flex justify-center gap-4 py-4">
         <button
           onClick={() => setNightMode(true)}
