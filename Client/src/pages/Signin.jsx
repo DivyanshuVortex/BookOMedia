@@ -1,19 +1,51 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/LoginContext';
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const { setToken, setLogin , setUser} = useAuth();
   const [formData, setFormData] = useState({ email: '', password: '' });
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+    console.log("Form Data:", formData);
+    console.log(JSON.stringify(formData))
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await fetch("http://localhost:3000/api/user/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    console.log("After fetch", res)
+    if (!res.ok) {
+      throw new Error("Invalid credentials");
+    }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // TODO: Send to backend (POST /signin)
-    console.log('Signing in with:', formData);
-  };
+    const data = await res.json();
+
+
+    const { token, user } = data;
+
+    // Save to localStorage
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
+
+    // Update context
+    setToken(token);
+    setUser(user);
+    setLogin(true);
+
+    navigate("/profile");
+  } catch (err) {
+    alert("Login failed: " + err.message);
+  }
+};
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center">

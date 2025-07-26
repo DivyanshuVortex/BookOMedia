@@ -21,7 +21,7 @@ const Contact = () => {
       </video>
 
       {/* 🔳 Overlay with blur */}
-      <div className="absolute top-0 left-0 w-full h-full bg-black/40 backdrop-blur-sm z-0"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-black/40 backdrop-blur-[2px] z-0"></div>
 
       {/* 📦 Main Content */}
       <div className="relative z-10 flex justify-center items-center p-8">

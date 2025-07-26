@@ -1,22 +1,43 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: ''
+    name: "",
+    email: "",
+    password: "",
   });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("http://localhost:3000/api/user/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.message || "Signup failed");
+        return;
+      }
+
+      alert("Signup successful");
+      navigate("/signin"); // redirect to signin on success
+    } catch (err) {
+      console.error("Signup error:", err);
+      alert("An error occurred during signup");
+    }
+  };
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // TODO: Send to backend (POST /signup)
-    console.log('Signing up with:', formData);
   };
 
   return (
@@ -68,9 +89,9 @@ const Signup = () => {
           </button>
         </form>
         <p className="text-center text-sm text-gray-400 mt-4">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <button
-            onClick={() => navigate('/signin')}
+            onClick={() => navigate("/signin")}
             className="text-blue-500 hover:underline"
           >
             Sign In
