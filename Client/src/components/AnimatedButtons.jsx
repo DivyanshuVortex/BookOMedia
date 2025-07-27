@@ -13,7 +13,7 @@ const AnimatedButton = ({ text, onClick, className = '' }) => {
       {
         y: -100,
         opacity: 0,
-        rotateX: -150,
+        rotateX: -180,
         borderRadius: 0,
         position: 'relative',
         zIndex: -1,
@@ -24,14 +24,15 @@ const AnimatedButton = ({ text, onClick, className = '' }) => {
         rotateX: 0,
         borderRadius: '1rem',
         zIndex: 10,
-        delay: 1,
-        duration: 1.5,
+        delay: 0.5,
+        duration: 1,
         ease: 'back.out(1.7)',
         onComplete: () => {
           // Continuous bounce
           gsap.to(btnRef.current, {
-            y: '-=5',
-            duration: 1.5,
+            y: '-=  5',
+            delay: 0.5,
+            duration: 1,
             yoyo: true,
             repeat: -1,
             ease: 'power1.inOut',

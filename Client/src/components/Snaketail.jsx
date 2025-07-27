@@ -3,8 +3,8 @@ import { useEffect, useRef } from "react";
 export default function Snaketail() {
   const trailLength = 50;
   const trailRefs = useRef([]);
-  const trailPositions = useRef(Array(trailLength).fill({ x: 425, y: 277 }));
-  const mouse = useRef({ x: 46, y: 40.5 });
+  const trailPositions = useRef(Array(trailLength).fill({ x: 916, y: 557 , z: 456 }));
+  const mouse = useRef({ x: 46, y: 40.5 , z: 0 });
 
   useEffect(() => {
     const handleMouseMove = (e) => {

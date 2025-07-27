@@ -59,20 +59,18 @@ const ReadBook = () => {
   return (
     <div>
       <div className="flex justify-center gap-4 py-4">
-        <button
-          onClick={() => setNightMode(true)}
-          className="px-5 py-2 rounded-md bg-gray-800 text-white font-semibold shadow hover:bg-gray-700 transition duration-300"
-        >
-          🌙 Night Mode
-        </button>
+  <button
+    onClick={() => setNightMode((prev) => !prev)}
+    className={`px-5 py-2 rounded-md font-semibold shadow transition duration-300 ${
+      nightMode
+        ? "bg-gray-200 text-gray-800 hover:bg-gray-300"
+        : "bg-gray-800 text-white hover:bg-gray-700"
+    }`}
+  >
+    {nightMode ? "☀️ Light Mode" : "🌙 Night Mode"}
+  </button>
+</div>
 
-        <button
-          onClick={() => setNightMode(false)}
-          className="px-5 py-2 rounded-md bg-gray-200 text-gray-800 font-semibold shadow hover:bg-gray-300 transition duration-300"
-        >
-          ☀️ Light Mode
-        </button>
-      </div>
 
       <div className="w-full h-screen rounded-2xl bg-gradient-to-b from-black via-gray-900 to-gray-400 flex justify-center items-center">
         <iframe

@@ -24,7 +24,6 @@ const ListofBook = () => {
       try {
         const res = await axios.get(`http://localhost:3000/search?title=${searchData}`);
         setBooks(res.data); // Assumes it's an array of books
-        console.log(res.data);
       } catch (err) {
         console.error("Error fetching books:", err);
       } finally {

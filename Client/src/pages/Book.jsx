@@ -3,13 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSearch } from "../contexts/SearchContext";
 import AnimatedButtons from "../components/AnimatedButtons";
 import BackGround from "../assets/BackGround(hero).mp4";
+import { useAuth } from "../contexts/LoginContext";
 
 const Book = () => {
   const { bookId: contextBookId, setBookId } = useSearch();
+  const { setBookIds, bookIds } = useAuth();
   const { bookId: urlBookId } = useParams();
 
   const navigate = useNavigate();
-  console.log(`Context : ${contextBookId} and urlBook : ${urlBookId}`);
   const bookId = urlBookId || contextBookId;
   const [bookData, setBookData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -32,6 +33,13 @@ const Book = () => {
 
     fetchBookData();
   }, [bookId]);
+
+  const handlebookmark = () => {
+    setBookIds((prev) => {
+      if (prev.includes(bookId)) return prev; 
+      return [...prev, bookId];
+    });
+  };
 
   if (!bookId) {
     return (
@@ -93,7 +101,16 @@ const Book = () => {
 
           {/* Book Info */}
           <div className="flex flex-row sm:flex-col justify-start space-y-2 max-w-2xl">
-            <h2 className="text-2xl ml-4 md:text-3xl font-bold">{title}</h2>
+            <h2 className="text-2xl ml-4 md:text-3xl font-bold">
+              {title}
+              <span
+                className=" inline-block opacity-50 scale-95 hover:opacity-100 hover:scale-105 border border-amber-50 h-auto ml-5 w-fit px-2 py-1 text-sm rounded transition duration-200"
+                onClick={handlebookmark}
+              >
+                BOOKMARK IT!!!
+              </span>
+            </h2>
+
             <p className="text-md ml-4.5 text-gray-300">{authors}</p>
             <div
               className="text-base text-gray-500 leading-relaxed tracking-wide prose prose-sm prose-p:my-2 prose-i:text-gray-700 prose-i:not-italic scale-95"

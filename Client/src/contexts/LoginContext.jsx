@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [login, setLogin] = useState(false);
   const [token, setToken] = useState(null); // ✅ for JWT token
   const [user, setUser] = useState(null);   // ✅ optional: for user info
+  const [bookIds , setBookIds ] = useState([]);
 
   // 🧠 Load token and user from localStorage on first render
   useEffect(() => {
@@ -42,6 +43,8 @@ export const AuthProvider = ({ children }) => {
         user,
         setUser,
         logout,
+        bookIds,
+        setBookIds
       }}
     >
       {children}
