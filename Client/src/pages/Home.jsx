@@ -3,48 +3,56 @@ import { Link } from "react-router-dom";
 import { useSearch } from "../contexts/SearchContext";
 import Hero from "../components/Hero";
 import BackGround from "../assets/BackGround(hero).mp4";
+import B1 from '../assets/B1.jpeg';
+import B2 from '../assets/B2.jpeg';
+import B3 from '../assets/B3.jpeg';
+import B4 from '../assets/B4.jpeg';
+import B5 from '../assets/B5.jpeg';
+import B6 from '../assets/B6.jpeg';
+
+
 const books = [
   {
     id: "wrOQLV6xB-wC",
     title: "Harry Potter and the Sorcerer's Stone",
     author: "J.K. Rowling",
     pageCount: 309,
-    thumbnail: "http://books.google.com/books/content?id=wrOQLV6xB-wC&printsec=frontcover&img=1&zoom=0&source=gbs_api"
+    thumbnail: B1
   },
   {
     id: "FzVjBgAAQBAJ",
     title: "The Alchemist",
     author: "Paulo Coelho",
     pageCount: 208,
-    thumbnail: "http://books.google.com/books/content?id=FzVjBgAAQBAJ&printsec=frontcover&img=1&zoom=0&source=gbs_api"
+    thumbnail: B2
   },
   {
     id: "VxVr0lf1raQC",
     title: "The Da Vinci Code",
     author: "Dan Brown",
     pageCount: 631,
-    thumbnail: "http://books.google.com/books/content?id=VxVr0lf1raQC&printsec=frontcover&img=1&zoom=0&source=gbs_api"
+    thumbnail: B3
   },
   {
     id: "_l-PjpBOv9gC",
     title: "Think and Grow Rich",
     author: "Napoleon Hill",
     pageCount: 238,
-    thumbnail: "http://books.google.com/books/content?id=_l-PjpBOv9gC&printsec=frontcover&img=1&zoom=0&source=gbs_api"
+    thumbnail: B4
   },
   {
     id: "7p6xDwAAQBAJ",
     title: "You Should See Me in a Crown",
     author: "Leah Johnson",
     pageCount: 336,
-    thumbnail: "http://books.google.com/books/content?id=7p6xDwAAQBAJ&printsec=frontcover&img=1&zoom=0&source=gbs_api"
+    thumbnail: B5
   },
   {
     id: "RfauDgAAQBAJ",
     title: "Long Way Down (Verse Novel)",
     author: "Jason Reynolds",
     pageCount: 320,
-    thumbnail: "http://books.google.com/books/content?id=RfauDgAAQBAJ&printsec=frontcover&img=1&zoom=0&source=gbs_api"
+    thumbnail: B6
   },
 ];
 

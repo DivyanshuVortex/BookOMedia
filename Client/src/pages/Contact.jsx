@@ -1,5 +1,6 @@
 import React from "react";
 import AnimatedButton from "../components/AnimatedButtons";
+import BGV from '../assets/ContactBE.mp4'
 
 const Contact = () => {
   return (
@@ -12,9 +13,7 @@ const Contact = () => {
         muted
       >
         <source
-          src="https://cdn.pixabay.com/video/2021/07/30/83274-581386222_large.mp4"
-          //src="https://cdn.pixabay.com/video/2019/10/19/28067-367411324_large.mp4"
-          //src="https://cdn.pixabay.com/video/2022/05/27/118363-714645707_large.mp4"
+          src={BGV}
           type="video/mp4"
         />
         Your browser does not support the video tag.

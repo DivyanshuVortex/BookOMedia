@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import AnimatedButton from "../components/AnimatedButtons";
+import BGV from '../assets/404BG.mp4'
 
 const NotFound = () => {
   return (
@@ -14,8 +15,7 @@ const NotFound = () => {
         className="absolute w-full h-full object-cover z-0"
       >
         <source
-          //src="https://cdn.pixabay.com/video/2021/07/30/83274-581386222_large.mp4"
-          src="https://cdn.pixabay.com/video/2019/10/19/28067-367411324_large.mp4"
+          src={BGV}
           type="video/mp4"
         />
         Your browser does not support the video tag.
