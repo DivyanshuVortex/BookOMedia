@@ -7,8 +7,8 @@ const Profile = () => {
 
   const { login, setLogin , user : BEuser, token } = useAuth();
   const user = {
-    name: BEuser.name || 'User-Name',
-    email: BEuser.email || 'User-Email',
+    name: BEuser?.name || 'User-Name',
+    email: BEuser?.email || 'User-Email',
     bookmarkedBooks: [
       {
         id: 1,
