@@ -6,15 +6,17 @@ import BackGround from "../assets/BackGround(hero).mp4";
 import { useAuth } from "../contexts/LoginContext";
 
 const Book = () => {
-  const { bookId: contextBookId, setBookId } = useSearch();
-  const { setBookIds, bookIds } = useAuth();
+  const { setBookId } = useSearch();
+  const { setBookIds } = useAuth();
   const { bookId: urlBookId } = useParams();
 
   const navigate = useNavigate();
-  const bookId = urlBookId || contextBookId;
+  const bookId = urlBookId ;
   const [bookData, setBookData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+
+  const token = localStorage.getItem("token");
   useEffect(() => {
     if (!bookId) return;
 
@@ -34,12 +36,52 @@ const Book = () => {
     fetchBookData();
   }, [bookId]);
 
-  const handlebookmark = () => {
-    setBookIds((prev) => {
+ 
+ const handlebookmark = async () => {
+  const token = localStorage.getItem("token");
+  console.log(token)
+  if (!token) {
+    alert("You must be logged in to save the bookmark");
+      setBookIds((prev) => {
       if (prev.includes(bookId)) return prev; 
       return [...prev, bookId];
     });
+    return ;
   };
+
+  if (!bookId) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-950 text-white">
+        <p className="text-lg">No book selected.</p>
+      </div>
+    );
+  }
+
+  try {
+    const res = await fetch("http://localhost:3000/api/user/bookmarks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ bookId }), // ✅ send object
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("Book bookmarked successfully!");
+      setBookIds((prev) => [...new Set([...prev, bookId])]); // Optional: sync frontend state
+    } else {
+      console.error("Bookmark failed:", data);
+      alert(data.message || "Bookmarking failed");
+    }
+  } catch (error) {
+    console.log("Bookmark error:", error);
+    alert("Error bookmarking the book.");
+  }
+};
+
 
   if (!bookId) {
     return (
