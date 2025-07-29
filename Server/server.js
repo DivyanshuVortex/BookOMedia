@@ -1,7 +1,7 @@
 import axios from 'axios';
 import express from 'express';
 import cors from 'cors'
-import { googleBooks } from './api/googleBook.js';
+import { googleBooks,Readgooglebook } from './api/googleBook.js';
 import routeauth from './Routes/route.auth.js';
 import dotenv from 'dotenv';
 import mongoConnect from './Database/mongoConnect.js';
@@ -54,9 +54,7 @@ app.get("/book/:bookId", async (req, res) => {
   const bookId = req.params?.bookId;
 
   try {
-    const response = await axios.get(
-      `https://www.googleapis.com/books/v1/volumes/${bookId}`
-    );
+    const response = await Readgooglebook(bookId);
 
     const info = response.data.volumeInfo;
 
@@ -69,7 +67,7 @@ app.get("/book/:bookId", async (req, res) => {
       title: info.title,
       authors: info.authors,
       description: info.description,
-      thumbnail: info.imageLinks?.thumbnail,
+      thumbnail: info.imageLinks?.smallThumbnail,
       previewLink: info.previewLink,
       infoLink: info.infoLink,
       pageCount: info.pageCount,

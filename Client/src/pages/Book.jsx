@@ -11,12 +11,9 @@ const Book = () => {
   const { bookId: urlBookId } = useParams();
 
   const navigate = useNavigate();
-  const bookId = urlBookId ;
+  const bookId = urlBookId;
   const [bookData, setBookData] = useState(null);
   const [loading, setLoading] = useState(true);
-
-
-  const token = localStorage.getItem("token");
   useEffect(() => {
     if (!bookId) return;
 
@@ -36,52 +33,50 @@ const Book = () => {
     fetchBookData();
   }, [bookId]);
 
- 
- const handlebookmark = async () => {
-  const token = localStorage.getItem("token");
-  console.log(token)
-  if (!token) {
-    alert("You must be logged in to save the bookmark");
+  const handlebookmark = async () => {
+    const token = localStorage.getItem("token");
+    console.log(token);
+    if (!token) {
+      alert("You must be logged in to save the bookmark");
       setBookIds((prev) => {
-      if (prev.includes(bookId)) return prev; 
-      return [...prev, bookId];
-    });
-    return ;
-  };
-
-  if (!bookId) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-gray-950 text-white">
-        <p className="text-lg">No book selected.</p>
-      </div>
-    );
-  }
-
-  try {
-    const res = await fetch("http://localhost:3000/api/user/bookmarks", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ bookId }), // ✅ send object
-    });
-
-    const data = await res.json();
-
-    if (res.ok) {
-      alert("Book bookmarked successfully!");
-      setBookIds((prev) => [...new Set([...prev, bookId])]); // Optional: sync frontend state
-    } else {
-      console.error("Bookmark failed:", data);
-      alert(data.message || "Bookmarking failed");
+        if (prev.includes(bookId)) return prev;
+        return [...prev, bookId];
+      });
+      return;
     }
-  } catch (error) {
-    console.log("Bookmark error:", error);
-    alert("Error bookmarking the book.");
-  }
-};
 
+    if (!bookId) {
+      return (
+        <div className="flex items-center justify-center h-screen bg-gray-950 text-white">
+          <p className="text-lg">No book selected.</p>
+        </div>
+      );
+    }
+
+    try {
+      const res = await fetch("http://localhost:3000/api/user/bookmarks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ bookId }), // ✅ send object
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("Book bookmarked successfully!");
+        setBookIds((prev) => [...new Set([...prev, bookId])]); // Optional: sync frontend state
+      } else {
+        console.error("Bookmark failed:", data);
+        alert(data.message || "Bookmarking failed");
+      }
+    } catch (error) {
+      console.log("Bookmark error:", error);
+      alert("Error bookmarking the book.");
+    }
+  };
 
   if (!bookId) {
     return (
@@ -112,11 +107,7 @@ const Book = () => {
     ? bookData.authors.join(", ")
     : bookData?.authors || "Unknown Author";
   const desc = bookData?.description || "No description available.";
-  const rawThumbnail = bookData?.thumbnail || "https://via.placeholder.com/150";
-  const image = rawThumbnail.includes("books.google.com")
-    ? rawThumbnail.replace(/zoom=\d+/, "zoom=0.5") +
-      (rawThumbnail.includes("zoom=") ? "" : "&zoom=0")
-    : rawThumbnail;
+  const image = bookData?.thumbnail || "https://via.placeholder.com/150";
 
   return (
     <div className="relative min-h-screen text-white">
