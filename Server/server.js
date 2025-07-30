@@ -4,7 +4,7 @@ import cors from 'cors'
 import { googleBooks,Readgooglebook } from './api/googleBook.js';
 import routeauth from './Routes/route.auth.js';
 import dotenv from 'dotenv';
-import mongoConnect from './Database/mongoConnect.js';
+import mongoConnect from './config/mongoConnect.js';
 dotenv.config();
 
 

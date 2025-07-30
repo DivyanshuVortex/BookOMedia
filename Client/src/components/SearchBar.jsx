@@ -22,6 +22,7 @@ const SearchBar = () => {
     const trimmed = input.trim();
     if (trimmed) {
       setSearchData(trimmed); // Set in context
+      toggleSearch();
       navigate(`/search/${trimmed}`);
     }
   };

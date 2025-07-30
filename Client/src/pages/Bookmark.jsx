@@ -51,10 +51,7 @@ const Bookmark = () => {
             const data = await res.json();
 
             const thumbnailRaw = data.volumeInfo.imageLinks?.thumbnail;
-            const thumbnailimg = thumbnailRaw
-              ? thumbnailRaw.replace(/zoom=\d/, "zoom=0") + "&edge=curl"
-              : "https://via.placeholder.com/150";
-
+            const thumbnailimg = thumbnailRaw;
             return {
               id: data.id,
               title: data.volumeInfo.title,

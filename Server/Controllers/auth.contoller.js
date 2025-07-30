@@ -41,7 +41,6 @@ export const signup = async (req, res) => {
 
 //verify
 export const verify = async (req, res) => {
-  const { email, otp } = req.body;
 
   if (!email || !otp) {
     return res.status(400).json({ message: "Email and OTP are required" });

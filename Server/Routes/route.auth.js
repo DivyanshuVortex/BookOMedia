@@ -3,6 +3,7 @@ import { signup, signin,profile, verify } from '../Controllers/auth.contoller.js
 import { bookmarks , bookmarksadd } from '../Controllers/bookmark.contoller.js';
 import { verifyToken } from '../middlewares/verifyToken.js';
 import { sendOtp }  from '../utils/resend.js';
+import { suggestion } from '../Controllers/suggestion.controller.js';
 
 
 
@@ -15,4 +16,5 @@ router.get('/bookmarks' , verifyToken , bookmarks )
 router.post('/bookmarks' , verifyToken , bookmarksadd )
 router.post('/email' , sendOtp)
 router.post('/verify' , verify)
+router.post('/suggestions', suggestion);
 export default router;
