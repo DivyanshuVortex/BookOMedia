@@ -10,8 +10,6 @@ const SignIn = () => {
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-    console.log("Form Data:", formData);
-    console.log(JSON.stringify(formData))
  const handleSubmit = async (e) => {
   e.preventDefault();
   try {
@@ -22,7 +20,6 @@ const SignIn = () => {
       },
       body: JSON.stringify(formData),
     });
-    console.log("After fetch", res)
     if (!res.ok) {
       throw new Error("Invalid credentials");
     }

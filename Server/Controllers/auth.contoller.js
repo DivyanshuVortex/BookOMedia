@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import otpStore from "../utils/map.js";
 
 // SIGNUP
 export const signup = async (req, res) => {
@@ -32,8 +33,47 @@ export const signup = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(500).json({ message: "Error during sign-up", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error during sign-up", error: err.message });
   }
+};
+
+//verify
+export const verify = async (req, res) => {
+  const { email, otp } = req.body;
+
+  if (!email || !otp) {
+    return res.status(400).json({ message: "Email and OTP are required" });
+  }
+
+  const storedOtp = otpStore.get(email);
+  console.log(storedOtp);
+
+  if (!storedOtp) {
+    return res.status(410).json({ message: "OTP expired or not found" });
+  }
+
+  if (storedOtp !== otp) {
+    return res.status(401).json({ message: "Invalid OTP" });
+  }
+
+  try {
+    const existingUser = await User.findOne({ email });
+    if (!existingUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    existingUser.isVerified = true;
+    await existingUser.save();
+    console.log("User found. Saving verified status...");
+  } catch (err) {
+    console.error(err);
+  }
+  otpStore.delete(email); // Optional: clear OTP once used
+
+  res
+    .status(200)
+    .json({ verified: true, message: "OTP verified successfully" });
 };
 
 // SIGNIN
@@ -62,10 +102,13 @@ export const signin = async (req, res) => {
         id: existingUser._id,
         name: existingUser.name,
         email: existingUser.email,
+        isVerified: existingUser.isVerified,
       },
     });
   } catch (err) {
-    res.status(500).json({ message: "Error during sign-in", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error during sign-in", error: err.message });
   }
 };
 
@@ -80,6 +123,8 @@ export const profile = async (req, res) => {
 
     res.status(200).json({ message: "User profile fetched", user });
   } catch (err) {
-    res.status(500).json({ message: "Error fetching profile", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching profile", error: err.message });
   }
 };
