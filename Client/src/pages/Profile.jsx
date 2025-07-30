@@ -1,48 +1,51 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/LoginContext';
-import AnimatedButton from '../components/AnimatedButtons'
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/LoginContext";
+import AnimatedButton from "../components/AnimatedButtons";
 const Profile = () => {
   const navigate = useNavigate();
 
-  const { login, setLogin , user : BEuser, token } = useAuth();
+  const { login, setLogin, user: BEuser, token } = useAuth();
   const user = {
-    name: BEuser?.name || 'User-Name',
-    email: BEuser?.email || 'User-Email',
+    name: BEuser?.name ?? "Guest User",
+    email: BEuser?.email ?? "No Email",
+    verified: BEuser?.isVerified ?? false,
+
     bookmarkedBooks: [
       {
         id: 1,
-        title: 'Atomic Habits',
-        author: 'James Clear',
-        thumbnail: 'https://covers.openlibrary.org/b/id/10523383-L.jpg',
-        link: 'https://openlibrary.org/works/OL18918138W/Atomic_Habits',
+        title: "Atomic Habits",
+        author: "James Clear",
+        thumbnail: "https://covers.openlibrary.org/b/id/10523383-L.jpg",
+        link: "https://openlibrary.org/works/OL18918138W/Atomic_Habits",
       },
       {
         id: 2,
-        title: 'Deep Work',
-        author: 'Cal Newport',
-        thumbnail: 'https://covers.openlibrary.org/b/id/11113971-L.jpg',
-        link: 'https://openlibrary.org/works/OL17371713W/Deep_Work',
+        title: "Deep Work",
+        author: "Cal Newport",
+        thumbnail: "https://covers.openlibrary.org/b/id/11113971-L.jpg",
+        link: "https://openlibrary.org/works/OL17371713W/Deep_Work",
       },
       {
         id: 3,
-        title: 'The Alchemist',
-        author: 'Paulo Coelho',
-        thumbnail: 'https://covers.openlibrary.org/b/id/8231856-L.jpg',
-        link: 'https://openlibrary.org/works/OL262758W/The_Alchemist',
+        title: "The Alchemist",
+        author: "Paulo Coelho",
+        thumbnail: "https://covers.openlibrary.org/b/id/8231856-L.jpg",
+        link: "https://openlibrary.org/works/OL262758W/The_Alchemist",
       },
-    ]
+    ],
   };
 
-  const handleSignIn = () => navigate('/signin');
-  const handleSignUp = () => navigate('/signup');
+  const handleSignIn = () => navigate("/signin");
+  const handleSignUp = () => navigate("/signup");
+  const handleVerify = () => navigate("/verify");
 
-  const handlelogout = ()=>{
-     console.log(user , "Logout");
+  const handlelogout = () => {
+    console.log(user, "Logout");
     setLogin(false);
-    console.log("Token :" , token )
-   localStorage.removeItem("token");
-  }
+    console.log("Token :", token);
+    localStorage.removeItem("token");
+  };
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -50,23 +53,48 @@ const Profile = () => {
         <div className="bg-gray-950 bg-opacity-90 backdrop-blur-md shadow-xl rounded-2xl p-6">
           <h2 className="text-3xl font-bold mb-6 text-center">👤 Profile</h2>
 
-          { login ? (
-            <div className="mb-8 text-center">
+          {login ? (
+            <div className="mb-8 text-center bg-gray-900/70 rounded-xl p-6 shadow-lg">
               <img
                 src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${user.name}`}
                 alt="Profile"
-                className="w-20 h-20 rounded-full mx-auto mb-4"
+                className="w-20 h-20 rounded-full mx-auto mb-4 ring-2 ring-blue-500"
               />
-              <p><strong>Name:</strong> {user.name}</p>
-              <p><strong>Email:</strong> {user.email}</p>
-              <br />
-              <hr />
-              <AnimatedButton text={'Logout'} className='w-[50vw] m-5' onClick={handlelogout}/>
-              <hr />
 
+              <p className="text-lg font-semibold text-white">
+                {user.name}
+                <span className="ml-3 inline-block text-sm align-middle">
+                  {user.verified ? (
+                    <span className="text-green-400 font-medium bg-green-900/50 px-2 py-1 rounded-full">
+                      ✅ Verified
+                    </span>
+                  ) : (
+                    <span
+                      onClick={handleVerify}
+                      className="text-red-400 font-medium bg-red-900/40 px-2 py-1 rounded-full cursor-pointer hover:bg-red-800/70 transition"
+                    >
+                      Click for Verification
+                    </span>
+                  )}
+                </span>
+              </p>
+
+              <p className="text-gray-400 text-sm mt-1">
+                <strong>Email:</strong> {user.email}
+              </p>
+
+              <div className="mt-6 border-t border-gray-700 pt-4">
+                <AnimatedButton
+                  text="🚪 Logout"
+                  className="w-full sm:w-[50vw] m-auto"
+                  onClick={handlelogout}
+                />
+              </div>
             </div>
           ) : (
-            <div className="text-center text-gray-400 mb-6">You are not signed in.</div>
+            <div className="text-center text-gray-400 mb-6">
+              You are not signed in.
+            </div>
           )}
 
           {!login && (
@@ -106,7 +134,9 @@ const Profile = () => {
 
           {login && (
             <>
-              <h3 className="text-xl font-semibold mb-4">📌 Bookmarked Books</h3>
+              <h3 className="text-xl font-semibold mb-4">
+                📌 Bookmarked Books
+              </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {user.bookmarkedBooks.map((book) => (
                   <a

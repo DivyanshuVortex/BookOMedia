@@ -24,6 +24,7 @@ import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 import Bookmark from "./pages/Bookmark";
 import Upload from "./pages/Upload";
+import Verifyemail from "./utils/verifyemail";
 
 // Layout wrapper
 function LayoutWrapper({ children }) {
@@ -60,6 +61,7 @@ export default function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/bookmarks" element={<Bookmark />} />
                 <Route path="/upload" element={<Upload />} />
+                <Route path="/verify" element={<Verifyemail/>}/>
                 <Route path="/404" element={<NotFound />} />
                 <Route path="*" element={<Navigate to="/404" />} />
               </Routes>

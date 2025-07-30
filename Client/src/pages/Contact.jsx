@@ -1,4 +1,3 @@
-import React from "react";
 import AnimatedButton from "../components/AnimatedButtons";
 import BGV from '../assets/ContactBE.mp4'
 
@@ -30,7 +29,7 @@ const Contact = () => {
           <p className="text-lg mb-6">
             Have questions, suggestions, or want to collaborate? <br /> <br />
             <a
-              href="https://github.com"
+              href="https://github.com/DivyanshuVortex/BookOMedia"
               target="_blank"
               rel="noopener noreferrer"
             >
