@@ -27,7 +27,7 @@ const Signup = lazy(() => import("./pages/Signup"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Bookmark = lazy(() => import("./pages/Bookmark"));
 const Upload = lazy(() => import("./pages/Upload"));
-const Verifyemail = lazy(() => import("./utils/verifyemail"));
+const Verifyemail = lazy(() => import("./utils/Verifyemail"));
 
 // Layout wrapper
 function LayoutWrapper({ children }) {

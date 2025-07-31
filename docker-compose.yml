@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6.0.25
+    container_name: mongoDB
+    ports:
+      - "27017:27017"
+    volumes:
+      - ../BookOMedia-DockerData:/data/db
+    networks:
+    - mern
+
+  backend:
+    build:
+      context: ./Server  
+    container_name: backend
+    ports:
+      - "3000:3000"   
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/yourdbname
+    networks:
+      - mern
+
+  frontend:
+    build:
+      context: ./Client 
+    container_name: fe
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - mern
+
+volumes:
+  mongo-data: 
+    driver: local
+
+networks:
+  mern:
+    driver: bridge

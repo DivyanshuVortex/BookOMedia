@@ -160,11 +160,6 @@ const Book = () => {
                   navigate(`/ReadBook/${bookId}`);
                 }}
               />
-
-              <AnimatedButtons
-                text="Download"
-                className="hover:bg-black hover:text-white border hover:border-b-white"
-              />
             </div>
           </div>
         </div>
