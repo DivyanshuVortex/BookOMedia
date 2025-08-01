@@ -12,7 +12,7 @@ const Footer = () => {
         </p>
         <div className="flex gap-6 text-sm items-center">
           {login ? (
-            <Link to="/profile">
+             <Link to="/profile">
               <img
                 src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${user.name}`}
                 alt="Profile"
