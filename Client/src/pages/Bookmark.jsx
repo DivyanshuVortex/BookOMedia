@@ -3,27 +3,30 @@ import { useAuth } from "../contexts/LoginContext";
 import { Link } from "react-router-dom";
 
 const Bookmark = () => {
-  const { bookIds, setBookId, token, setBookIds,login } = useAuth();
+  const { bookIds, setBookId, token, setBookIds, login } = useAuth();
   const [fetchedBooks, setFetchedBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const beURL = import.meta.env.VITE_BASE_BE_URL || "http://localhost:3000/";
   // 🔐 Fetch user's bookmarked bookIds from backend
   useEffect(() => {
     if (!token) return;
 
     const fetchUserBookmarks = async () => {
       try {
-        const res = await fetch("https://bookomedia.onrender.com/api/user/bookmarks", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(
+          `${beURL}api/user/bookmarks`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!res.ok) throw new Error("Failed to fetch bookmarks");
 
         const data = await res.json();
-        setBookIds(data.bookmarks); // ✅ update context
+        setBookIds(data.bookmarks);
       } catch (err) {
         console.error("Error fetching bookmarks:", err);
       }
@@ -75,7 +78,7 @@ const Bookmark = () => {
     fetchBooksFromAPI();
   }, [bookIds]);
 
- return (
+  return (
     <div className="p-4 min-h-screen bg-transparent">
       <div className="max-w-6xl mx-auto bg-transparent rounded-2xl p-6">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-400">
@@ -104,9 +107,7 @@ const Bookmark = () => {
                   alt={book.title}
                   className="w-full h-64 object-cover rounded mb-3"
                 />
-                <h3 className="text-lg font-semibold truncate">
-                  {book.title}
-                </h3>
+                <h3 className="text-lg font-semibold truncate">{book.title}</h3>
                 <p className="text-gray-400 text-sm">
                   by {book.author} in <span>{book.publishedYear}</span>
                 </p>

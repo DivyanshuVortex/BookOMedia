@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const navigate = useNavigate();
+   const beURL = import.meta.env.VITE_BASE_BE_URL || "http://localhost:3000/";
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -13,7 +14,7 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("https://bookomedia.onrender.com/api/user/signup", {
+      const res = await fetch(`${beURL}api/user/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

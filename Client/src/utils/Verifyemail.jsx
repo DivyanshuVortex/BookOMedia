@@ -8,7 +8,7 @@ const VerifyEmail = () => {
   const [status, setStatus] = useState(null); // 'sent', 'verified', 'error', etc.
   const [step, setStep] = useState('email'); // email / otp
   const navigate = useNavigate();
-
+ const beURL = import.meta.env.VITE_BASE_BE_URL || "http://localhost:3000/";
   const email = user?.email;
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const VerifyEmail = () => {
     setStatus('loading');
 
     try {
-      const res = await fetch('https://bookomedia.onrender.com/api/user/email', {
+      const res = await fetch(`${beURL}api/user/email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ const VerifyEmail = () => {
     setStatus('loading');
 
     try {
-      const res = await fetch('https://bookomedia.onrender.com/api/user/verify', {
+      const res = await fetch(`${beURL}api/user/verify`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

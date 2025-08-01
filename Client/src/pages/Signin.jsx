@@ -1,48 +1,47 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/LoginContext';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/LoginContext";
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const { setToken, setLogin , setUser} = useAuth();
-  const [formData, setFormData] = useState({ email: '', password: '' });
-
+  const { setToken, setLogin, setUser } = useAuth();
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const beURL = import.meta.env.VITE_BASE_BE_URL || "http://localhost:3000/";
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const res = await fetch("https://bookomedia.onrender.com/api/user/signin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-    if (!res.ok) {
-      throw new Error("Invalid credentials");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`${beURL}api/user/signin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) {
+        throw new Error("Invalid credentials");
+      }
+
+      const data = await res.json();
+
+      const { token, user } = data;
+
+      // Save to localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      // Update context
+      setToken(token);
+      setUser(user);
+      setLogin(true);
+
+      navigate("/profile");
+    } catch (err) {
+      alert("Login failed: " + err.message);
     }
-
-    const data = await res.json();
-
-
-    const { token, user } = data;
-
-    // Save to localStorage
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
-
-    // Update context
-    setToken(token);
-    setUser(user);
-    setLogin(true);
-
-    navigate("/profile");
-  } catch (err) {
-    alert("Login failed: " + err.message);
-  }
-};
+  };
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center">
@@ -81,9 +80,9 @@ const SignIn = () => {
           </button>
         </form>
         <p className="text-center text-sm text-gray-400 mt-4">
-          Don’t have an account?{' '}
+          Don’t have an account?{" "}
           <button
-            onClick={() => navigate('/signup')}
+            onClick={() => navigate("/signup")}
             className="text-blue-500 hover:underline"
           >
             Sign Up

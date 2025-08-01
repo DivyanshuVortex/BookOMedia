@@ -14,13 +14,14 @@ const Book = () => {
   const bookId = urlBookId;
   const [bookData, setBookData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const beURL = import.meta.env.VITE_BASE_BE_URL || 'http://localhost:3000/';
   useEffect(() => {
     if (!bookId) return;
 
     const fetchBookData = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`https://bookomedia.onrender.com/book/${bookId}`);
+        const res = await fetch(`${beURL}book/${bookId}`);
         const data = await res.json();
         setBookData(data);
       } catch (error) {
@@ -54,7 +55,7 @@ const Book = () => {
     }
 
     try {
-      const res = await fetch("https://bookomedia.onrender.com/api/user/bookmarks", {
+      const res = await fetch(`${beURL}api/user/bookmarks`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
