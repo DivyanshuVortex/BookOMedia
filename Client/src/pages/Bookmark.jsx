@@ -13,7 +13,7 @@ const Bookmark = () => {
 
     const fetchUserBookmarks = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/user/bookmarks", {
+        const res = await fetch("https://bookomedia.onrender.com/api/user/bookmarks", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

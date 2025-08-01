@@ -20,7 +20,7 @@ const Book = () => {
     const fetchBookData = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`http://localhost:3000/book/${bookId}`);
+        const res = await fetch(`https://bookomedia.onrender.com/book/${bookId}`);
         const data = await res.json();
         setBookData(data);
       } catch (error) {
@@ -54,7 +54,7 @@ const Book = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/api/user/bookmarks", {
+      const res = await fetch("https://bookomedia.onrender.com/api/user/bookmarks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

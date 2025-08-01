@@ -14,10 +14,12 @@ mongoConnect();
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:5173", // or "*" if for dev only
+  origin: ["https://bookomedia-fe.onrender.com"], // Add frontend URL here
   credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 app.use('/api/user' , routeauth) ;
 
 

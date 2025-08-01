@@ -22,7 +22,7 @@ const VerifyEmail = () => {
     setStatus('loading');
 
     try {
-      const res = await fetch('http://localhost:3000/api/user/email', {
+      const res = await fetch('https://bookomedia.onrender.com/api/user/email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ const VerifyEmail = () => {
     setStatus('loading');
 
     try {
-      const res = await fetch('http://localhost:3000/api/user/verify', {
+      const res = await fetch('https://bookomedia.onrender.com/api/user/verify', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
