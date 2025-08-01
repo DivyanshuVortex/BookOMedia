@@ -51,7 +51,7 @@ export default function Snaketail() {
         <div
           key={i}
           ref={(el) => (trailRefs.current[i] = el)}
-          className="fixed w-4 h-4 rounded-full bg-[rgba(255,255,255,0.9)]  bg-blend-hue backdrop-blur-2xl z-[9999] pointer-events-none"
+          className="fixed w-4 h-4 rounded-full bg-[rgba(255,255,255,0.9)]  bg-blend-hue backdrop-blur-2xl z-[9999] pointer-events-none hidden sm:grid"
           style={{
             transform: `translate(-50%, -50%) scale(${0.5 - i * 0.01})`,
             transition: `left 0.001s ease-in, top 0.001s linear`,
