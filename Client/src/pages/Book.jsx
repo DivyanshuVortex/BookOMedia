@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSearch } from "../contexts/SearchContext";
 import AnimatedButtons from "../components/AnimatedButtons";
-import BackGround from "../assets/BackGround(hero).mp4";
+import BackGround from "../assets/BackGround-hero.mp4";
 import { useAuth } from "../contexts/LoginContext";
 
 const Book = () => {
