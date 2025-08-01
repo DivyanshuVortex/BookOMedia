@@ -133,7 +133,7 @@ const Book = () => {
           </div>
 
           {/* Book Info */}
-          <div className="flex flex-row sm:flex-col justify-start space-y-2 max-w-2xl">
+          <div className="flex flex-col justify-start space-y-2 max-w-2xl">
             <h2 className="text-2xl ml-4 md:text-3xl font-bold">
               {title}
               <span

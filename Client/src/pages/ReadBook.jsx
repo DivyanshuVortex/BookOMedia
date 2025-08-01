@@ -94,7 +94,7 @@ const ReadBook = () => {
         </button>
       </div>
       {showshareoption && (
-        <div className="absolute right-[20%] top-[22%] z-50 bg-gray-300 border border-gray-200 rounded-lg shadow-xl p-4 w-72 transition-all ease-in-out duration-300 delay-75">
+        <div className="absolute right-[5%] sm:right-[20%] top-[20%] z-50 bg-gray-300 border border-gray-200 rounded-lg shadow-xl p-4 w-72 transition-all ease-in-out duration-300 delay-75">
           {/* URL + Copy Button */}
           <div className="flex items-center gap-2 mb-4">
             <input

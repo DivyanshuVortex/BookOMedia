@@ -6,7 +6,7 @@ const Footer = () => {
   const { user, login } = useAuth();
   return (
     <footer className="bg-gray-900 text-white py-6 w-full px-4">
-      <div className="px-2 mx-auto flex flex-col sm:flex-row justify-between items-center text-sm">
+      <div className="px-2 mx-auto flex flex-row justify-between items-center text-sm">
         <p className="mb-2 sm:mb-0">
           &copy; {new Date().getFullYear()} BookVerse. All rights reserved.
         </p>
@@ -16,11 +16,13 @@ const Footer = () => {
               <img
                 src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${user.name}`}
                 alt="Profile"
-                className="w-10 h-10 bg-amber-50 rounded-full"
+                className="w-10 h-10 bg-amber-50 rounded-full opacity-0 sm:opacity-100"
               />
             </Link>
           ) : (
-            <div className="w-10 h-10 blur-sm bg-amber-50 rounded-full"> </div>
+            <div className="w-10 h-10 blur-sm bg-amber-50 rounded-full opacity-0 sm:opacity-100">
+              {" "}
+            </div>
           )}
 
           <Link
