@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSearch } from "../contexts/SearchContext";
 import Hero from "../components/Hero";
-import BackGround from "../assets/BackGround(hero).mp4";
+import BackGround from "../assets/BackGround.mp4";
 import B1 from '../assets/B1.jpeg';
 import B2 from '../assets/B2.jpeg';
 import B3 from '../assets/B3.jpeg';
