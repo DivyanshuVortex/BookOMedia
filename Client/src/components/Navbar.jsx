@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSearch } from "../contexts/SearchContext";
+import React, { useState , useEffect  } from "react";
+import { useSearch} from "../contexts/SearchContext";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 
@@ -12,10 +12,34 @@ const Navbar = () => {
     navigate(path);
     setMenuOpen(false); // Close menu on navigation
   };
+  const [isScrolled, setIsScrolled] = useState(false);
+
+useEffect(() => {
+  const handleScroll = () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    setIsScrolled(scrollTop > 5);
+  };
+
+  // Call once on mount in case page is already scrolled
+  handleScroll();
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+  };
+}, []);
+
+
 
   return (
     <div>
-      <nav className="bg-[#0e0e20a6] text-white px-6 py-4 shadow-md flex justify-between items-center w-full">
+      <nav
+  className={`z-50 px-6 py-4 shadow-md flex justify-between items-center w-full transition-all duration-100 ${
+    isScrolled ?"bg-transparent top-1 scale-99 opacity-20": "backdrop-blur-sm bg-[#0e0e20a6] text-white px-6 py-4 shadow-md flex justify-between items-center w-full"
+  }`}
+>
+
         {/* Logo */}
         <div
           className="text-2xl font-bold cursor-pointer"
@@ -90,59 +114,58 @@ const Navbar = () => {
         </div>
       </nav>
 
-    {menuOpen && (
-  <div
-    className="sm:hidden bg-[#0e0e20] text-white px-6 py-6 shadow-lg space-y-4"
-    style={{
-      perspective: "800px", // This gives the 3D effect
-    }}
-  >
-    {[
-      { label: "Home", path: "/" },
-      { label: "Upload", path: "/upload" },
-      { label: "Bookmarks", path: "/bookmarks" },
-      { label: "Profile", path: "/profile" },
-    ].map((item, i) => (
-      <div
-        key={item.label}
-        onClick={() => handleNavigation(item.path)}
-        className="text-lg cursor-pointer px-2 py-2 rounded-md hover:bg-white hover:text-black transition-all duration-300"
-        style={{
-          animation: "slideIn 0.6s ease-out forwards",
-          animationDelay: `${i * 120}ms`,
-          transformStyle: "preserve-3d",
-        }}
-      >
-        {item.label}
-      </div>
-    ))}
+      {menuOpen && (
+        <div
+          className="sm:hidden bg-[#0e0e20] text-white px-6 py-6 shadow-lg space-y-4"
+          style={{
+            perspective: "800px", // This gives the 3D effect
+          }}
+        >
+          {[
+            { label: "Home", path: "/" },
+            { label: "Upload", path: "/upload" },
+            { label: "Bookmarks", path: "/bookmarks" },
+            { label: "Profile", path: "/profile" },
+          ].map((item, i) => (
+            <div
+              key={item.label}
+              onClick={() => handleNavigation(item.path)}
+              className="text-lg cursor-pointer px-2 py-2 rounded-md hover:bg-white hover:text-black transition-all duration-300"
+              style={{
+                animation: "slideIn 0.6s ease-out forwards",
+                animationDelay: `${i * 120}ms`,
+                transformStyle: "preserve-3d",
+              }}
+            >
+              {item.label}
+            </div>
+          ))}
 
-    <div
-      style={{
-        animation: "slideIn 0.6s ease-out forwards",
-        animationDelay: "500ms",
-        transformStyle: "preserve-3d",
-      }}
-    >
-      {search ? (
-        <button
-          onClick={() => setSearch(false)}
-          className="w-full px-4 py-2 bg-white text-black rounded-md hover:bg-blue-950 hover:text-white border hover:border-white transition-all duration-300"
-        >
-          Close
-        </button>
-      ) : (
-        <button
-          onClick={() => setSearch(true)}
-          className="w-full px-4 py-2 bg-white text-black rounded-md hover:bg-blue-950 hover:text-white border hover:border-white transition-all duration-300"
-        >
-          Search
-        </button>
+          <div
+            style={{
+              animation: "slideIn 0.6s ease-out forwards",
+              animationDelay: "500ms",
+              transformStyle: "preserve-3d",
+            }}
+          >
+            {search ? (
+              <button
+                onClick={() => setSearch(false)}
+                className="w-full px-4 py-2 bg-white text-black rounded-md hover:bg-blue-950 hover:text-white border hover:border-white transition-all duration-300"
+              >
+                Close
+              </button>
+            ) : (
+              <button
+                onClick={() => setSearch(true)}
+                className="w-full px-4 py-2 bg-white text-black rounded-md hover:bg-blue-950 hover:text-white border hover:border-white transition-all duration-300"
+              >
+                Search
+              </button>
+            )}
+          </div>
+        </div>
       )}
-    </div>
-  </div>
-)}
-
 
       <SearchBar />
     </div>

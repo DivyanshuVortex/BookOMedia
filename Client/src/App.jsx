@@ -3,7 +3,7 @@ import {
   Routes,
   Route,
   Navigate,
-  useLocation
+  useLocation,
 } from "react-router-dom";
 
 import { Suspense, lazy } from "react";
@@ -53,7 +53,19 @@ export default function App() {
         <SearchProvider>
           <Router>
             <LayoutWrapper>
-              <Suspense fallback={<div className="text-white p-4">Loading...</div>}>
+              <Suspense
+                fallback={
+                  <div className="flex flex-col items-center justify-center w-full h-screen bg-gray-900">
+                    <div className="relative w-32 h-32">
+                      <div className="absolute inset-0 rounded-full border-4 border-dashed border-white animate-spin" />
+
+                      <div className="absolute inset-3 rounded-full border-4 border-double border-white animate-spin opacity-5" />
+                      <div className="absolute inset-9 rounded-full border-4 border-dashed border-white animate-ping opacity-50" />
+                      <div className="absolute inset-9 rounded-full border-4 border-dashed border-white animate-spin opacity-30" />
+                    </div>
+                  </div>
+                }
+              >
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/search/:searchData" element={<ListofBook />} />
