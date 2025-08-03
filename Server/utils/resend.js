@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import otpStore from "./map.js";
 dotenv.config();
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend("re_8qebzcUm_PimbghSFF9uZ5Vfsp3qXh4rZ");
 
 export const sendOtp = async (req, res) => {
   try {

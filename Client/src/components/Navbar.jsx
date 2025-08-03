@@ -45,7 +45,7 @@ useEffect(() => {
           className="text-2xl font-bold cursor-pointer"
           onClick={() => handleNavigation("/")}
         >
-          BookVerse
+          BookOMedia
         </div>
 
         {/* Hamburger Button for Small Screens */}

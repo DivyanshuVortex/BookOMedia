@@ -19,7 +19,7 @@ export const signup = async (req, res) => {
     // Create user first
     const user = await User.create({ name, email, password });
 
-    // Sign JWT after user is created
+    // Sign JWT after user is created[ harcore by intension for giving ease to dev.]
     const Key = "scert_jey";
     const token = jwt.sign({ id: user._id }, Key);
 
