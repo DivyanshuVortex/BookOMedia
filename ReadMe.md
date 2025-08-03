@@ -1,20 +1,20 @@
-# Project Name
+# BookOMedia
 
 A full-stack web application built with modern technologies for seamless user experience and robust backend functionality.
 
-## 📸 Screenshots
 
-<!-- Add your project screenshots here -->
-![Homepage](./screenshots/homepage.png)
-![Dashboard](./screenshots/dashboard.png)
-![Mobile View](./screenshots/mobile.png)
+### Sample_Video
+https://github.com/user-attachments/assets/01dbb8f4-1431-4cb3-9493-cc37d6a46819
+
+in last there is moblie preview ...
+
 
 ## 🚀 Tech Stack
 
 ### Frontend
 - **React** - UI library for building user interfaces
 - **Tailwind CSS** - Utility-first CSS framework for styling
-- **LocalStorage** - Client-side data persistence
+- **LocalStorage and jwt-token** - Client-side data persistence
 
 ### Backend
 - **Express.js** - Fast, unopinionated web framework for Node.js
@@ -40,7 +40,7 @@ A full-stack web application built with modern technologies for seamless user ex
 
 2. **Run with Docker Compose**
    ```bash
-   docker-compose up
+   docker compose up
    ```
 
 3. **Access the application**
@@ -52,14 +52,14 @@ A full-stack web application built with modern technologies for seamless user ex
 #### Prerequisites
 - Node.js (v16 or higher)
 - MongoDB (running locally or MongoDB Atlas)
-- npm or yarn
+- npm
 
 #### Backend Setup
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/your-project-name.git
-   cd your-project-name
+   git clone https://github.com/DivyanshuVortex/BookOMedia.git
+   cd BookOMedia
    ```
 
 2. **Install backend dependencies**
@@ -73,7 +73,7 @@ A full-stack web application built with modern technologies for seamless user ex
    cp .env.example .env
    ```
 
-4. **Configure environment variables** (see [Environment Variables](#environment-variables))
+4. **Configure environment variables** (see [Environment Variables](#environment-variables) scroll down)
 
 5. **Start the backend server**
    ```bash
@@ -108,6 +108,8 @@ PORT=3000
 # Database
 MONGODB_URI=mongodb://localhost:27017/your-database-name
 # For MongoDB Atlas: mongodb+srv://username:password@cluster.mongodb.net/database-name
+```
+
 
 ## 🔑 Key Features
 
@@ -125,6 +127,7 @@ MONGODB_URI=mongodb://localhost:27017/your-database-name
 - [ ] **File Upload System** - Implement image/document upload functionality
 - [ ] **Cloud Deployment** - Deploy to AWS/Heroku/Vercel
 - [ ] **Email Notifications** - Add email service integration
-- [ ] **Advanced Search** - Elasticsearch integration
+- [ ] **Advanced Search** - Elastic-search integration
 
 
+## If anyone wants to contribute, they can become a contributor by submitting a pull request.
