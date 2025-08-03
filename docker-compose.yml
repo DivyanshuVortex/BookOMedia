@@ -21,7 +21,6 @@ services:
       - mongo
     environment:
       - MONGO_URL=mongodb://mongo:27017/yourdbname
-      - RESEND_API_KEY=re_8qebzcUm_PimbghSFF9uZ5Vfsp3qXh4rZ
     networks:
       - mern
 
