@@ -11,7 +11,7 @@ const Hero = () => {
       <div className="flex justify-center items-center text-center">
         <div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Welcome to <span className="text-blue-400">BookVerse</span>
+            Welcome to <span className="text-blue-400">BookOMedia</span>
           </h1>
           <p className="text-lg md:text-xl mb-6 max-w-xl text-gray-300">
             Discover and share your favorite books with the world. Read. Bookmark. Upload.
