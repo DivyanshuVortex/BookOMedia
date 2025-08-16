@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:3000", // Change if different
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}/`, // Change if different
 });
 
 // Automatically attach token (if available)

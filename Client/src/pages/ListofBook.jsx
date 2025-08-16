@@ -22,7 +22,7 @@ const ListofBook = () => {
     const fetchBooks = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:3000/search?title=${searchData}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/search?title=${searchData}`);
         setBooks(res.data); // Assumes it's an array of books
       } catch (err) {
         console.error("Error fetching books:", err);

@@ -13,7 +13,7 @@ const Bookmark = () => {
 
     const fetchUserBookmarks = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/user/bookmarks", {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/bookmarks`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -62,7 +62,7 @@ const Bookmark = () => {
                 data.volumeInfo.publishedDate?.slice(0, 4) || "N/A",
             };
           } catch (err) {
-            console.error("Failed to fetch book with ID:", id);
+            console.error("Failed to fetch book with ID:", id , err);
             return null;
           }
         })

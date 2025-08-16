@@ -1,20 +1,15 @@
-import express from 'express';
-import { signup, signin,profile, verify } from '../Controllers/auth.contoller.js';
-import { bookmarks , bookmarksadd } from '../Controllers/bookmark.contoller.js';
-import { verifyToken } from '../middlewares/verifyToken.js';
-import { sendOtp }  from '../utils/resend.js';
-import { suggestion } from '../Controllers/suggestion.controller.js';
-
-
+import express from "express";
+import { signup, signin, profile } from "../Controllers/auth.contoller.js";
+import { bookmarks, bookmarksadd } from "../Controllers/bookmark.contoller.js";
+import { verifyToken } from "../middlewares/verifyToken.js";
+import { suggestion } from "../Controllers/suggestion.controller.js";
 
 const router = express.Router();
 
-router.post('/signup', signup);
-router.post('/signin', signin);
-router.post('/profile' , verifyToken ,profile);
-router.get('/bookmarks' , verifyToken , bookmarks )
-router.post('/bookmarks' , verifyToken , bookmarksadd )
-router.post('/email' , sendOtp)
-router.post('/verify' , verify)
-router.post('/suggestions', suggestion);
+router.post("/signup", signup);
+router.post("/signin", signin);
+router.post("/profile", verifyToken, profile);
+router.get("/bookmarks", verifyToken, bookmarks);
+router.post("/bookmarks", verifyToken, bookmarksadd);
+router.post("/suggestions", suggestion);
 export default router;

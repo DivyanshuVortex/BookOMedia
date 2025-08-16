@@ -49,7 +49,7 @@ const Contact = () => {
     const suggestion = e.target.suggestion.value;
 
     try {
-      const res = await fetch("http://localhost:3000/api/user/suggestions", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/suggestions`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

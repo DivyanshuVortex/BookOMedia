@@ -13,7 +13,7 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3000/api/user/signup", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

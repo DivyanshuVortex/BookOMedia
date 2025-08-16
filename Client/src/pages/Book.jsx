@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSearch } from "../contexts/SearchContext";
 import AnimatedButtons from "../components/AnimatedButtons";
+<<<<<<< HEAD
+import BackGround from "../assets/BackGround-hero.mp4";
+=======
 import BackGround from "../assets/BackGround.mp4";
+>>>>>>> master
 import { useAuth } from "../contexts/LoginContext";
 
 const Book = () => {
@@ -20,7 +24,7 @@ const Book = () => {
     const fetchBookData = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`http://localhost:3000/book/${bookId}`);
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/book/${bookId}`);
         const data = await res.json();
         setBookData(data);
       } catch (error) {
@@ -35,7 +39,6 @@ const Book = () => {
 
   const handlebookmark = async () => {
     const token = localStorage.getItem("token");
-    console.log(token);
     if (!token) {
       alert("You must be logged in to save the bookmark");
       setBookIds((prev) => {
@@ -54,7 +57,7 @@ const Book = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/api/user/bookmarks", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/bookmarks`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,8 +76,7 @@ const Book = () => {
         alert(data.message || "Bookmarking failed");
       }
     } catch (error) {
-      console.log("Bookmark error:", error);
-      alert("Error bookmarking the book.");
+      alert("Error bookmarking the book.", error);
     }
   };
 
