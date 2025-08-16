@@ -27,7 +27,6 @@ const Signup = lazy(() => import("./pages/Signup"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Bookmark = lazy(() => import("./pages/Bookmark"));
 const Upload = lazy(() => import("./pages/Upload"));
-const Verifyemail = lazy(() => import("./utils/Verifyemail"));
 
 // Layout wrapper
 function LayoutWrapper({ children }) {
@@ -65,7 +64,6 @@ export default function App() {
                   <Route path="/signup" element={<Signup />} />
                   <Route path="/bookmarks" element={<Bookmark />} />
                   <Route path="/upload" element={<Upload />} />
-                  <Route path="/verify" element={<Verifyemail />} />
                   <Route path="/404" element={<NotFound />} />
                   <Route path="*" element={<Navigate to="/404" />} />
                 </Routes>

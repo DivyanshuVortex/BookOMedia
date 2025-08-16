@@ -28,7 +28,6 @@ export const bookmarksadd = async (req, res) => {
 
     res.status(200).json({ message: "Book added to bookmarks", booksId: user.booksId });
   } catch (error) {
-    console.log("bookmark controller error:", error);
     res.status(500).json({ message: "Error adding bookmark", error: error.message });
   }
 };

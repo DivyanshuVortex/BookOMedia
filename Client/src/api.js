@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://bookomedia.onrender.com/", // Change if different
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}/`, // Change if different
 });
 
 // Automatically attach token (if available)
