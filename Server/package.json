@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "build": "npx babel . --out-dir dist --ignore node_modules,dist --presets=@babel/preset-env",
-    "start": "node dist/index.js"
+    "build": "echo 'no build step needed'",
+    "start": "node src/index.js"
   },
   "dependencies": {
     "axios": "^1.6.0",
@@ -19,9 +19,9 @@
     "zod": "^4.0.10"
   },
   "devDependencies": {
-    "@babel/cli": "^7.28.3",
-    "@babel/core": "^7.28.3",
-    "@babel/preset-env": "^7.28.3",
     "nodemon": "^3.0.0"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }
