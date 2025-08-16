@@ -1,120 +1,133 @@
-# 📚 Book Platform
+# BookOMedia
 
-A modern platform where users can view, share, upload, and interact with digital books. Built for readers, contributors, and administrators with seamless control over content, access, and engagement.
-
----
+A full-stack web application built with modern technologies for seamless user experience and robust backend functionality.
 
 
-search?title="" gets list of all 5-6 books
-view/:id(bookID)="" view a particular book
+### Sample_Video
+https://github.com/user-attachments/assets/01dbb8f4-1431-4cb3-9493-cc37d6a46819
+
+in last there is moblie preview ...
 
 
+## 🚀 Tech Stack
+
+### Frontend
+- **React** - UI library for building user interfaces
+- **Tailwind CSS** - Utility-first CSS framework for styling
+- **LocalStorage and jwt-token** - Client-side data persistence
+
+### Backend
+- **Express.js** - Fast, unopinionated web framework for Node.js
+- **MongoDB** - NoSQL database for data storage
+- **Mongoose** - MongoDB object modeling for Node.js
+- **JWT** - JSON Web Tokens for authentication
+- **bcrypt** - Password hashing library
+- **Zod** - TypeScript-first schema validation
+
+### DevOps & Tools
+- **Docker** - Containerization platform
+- **Docker Compose** - Multi-container Docker applications
+
+## 🛠️ Installation & Setup
+
+### Method 1: Using Docker (Recommended)
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/DivyanshuVortex/BookOMedia.git
+   cd BookOMedia
+   ```
+
+2. **Run with Docker Compose**
+   ```bash
+   docker compose up
+   ```
+
+3. **Access the application**
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:3000
+
+### Method 2: Traditional Setup
+
+#### Prerequisites
+- Node.js (v16 or higher)
+- MongoDB (running locally or MongoDB Atlas)
+- npm
+
+#### Backend Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/DivyanshuVortex/BookOMedia.git
+   cd BookOMedia
+   ```
+
+2. **Install backend dependencies**
+   ```bash
+   cd backend
+   npm install
+   ```
+
+3. **Create environment file**
+   ```bash
+   cp .env.example .env
+   ```
+
+4. **Configure environment variables** (see [Environment Variables](#environment-variables) scroll down)
+
+5. **Start the backend server**
+   ```bash
+   npm run dev
+   ```
+
+#### Frontend Setup
+
+1. **Install frontend dependencies**
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+2. **Start the development server**
+   ```bash
+   npm start
+   ```
+
+3. **Access the application**
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:3000
+
+## 🔧 Environment Variables
+
+Create a `.env` file in the backend directory with the following variables:
+
+```env
+# Server Configuration
+PORT=3000
+
+# Database
+MONGODB_URI=mongodb://localhost:27017/your-database-name
+# For MongoDB Atlas: mongodb+srv://username:password@cluster.mongodb.net/database-name
+```
 
 
+## 🔑 Key Features
 
-## 🚀 Features
+- **User Authentication** - Secure login/signup with JWT tokens
+- **Password Security** - Bcrypt hashing for password protection
+- **Data Validation** - Zod schema validation for API requests
+- **Responsive Design** - Mobile-first design with Tailwind CSS
+- **Persistent Storage** - LocalStorage for client-side data
+- **MongoDB Integration** - Mongoose ODM for database operations
+- **Containerized** - Docker support for easy deployment
 
-### 👤 User Features
 
-1. **View Books**  ✅
-   - Browse books with title, author, tags, and preview options.
+## 🚀 Future Plans
 
-2. **Share Book Links**[frontend]
-   - Share public or restricted access links for any book.
+- [ ] **File Upload System** - Implement image/document upload functionality
+- [ ] **Cloud Deployment** - Deploy to AWS/Heroku/Vercel
+- [ ] **Email Notifications** - Add email service integration
+- [ ] **Advanced Search** - Elastic-search integration
 
-3. **Bookmark Books**
-   - Save books to bookmarks with optional custom tags.
 
----
-
-### ⚙️ Advanced User Features
-
-4. **Upload Your Own Books**
-   - Upload books with title, description, genre, and cover image.
-
-5. **Track Your Book Stats**
-   - See number of reads, shares, and downloads on your uploaded books.
-
-6. **User Profile**
-   - Includes Display Picture (DP), bio, upload history, bookmarks, and reading stats.
-
-7. **Link-Based Private Access**
-   - Share book access via unique, token-based or password-protected links.
-
-8. **Comments & Reviews**
-   - Comment, rate, and review books for better recommendations.
-
-9. **Category & Tag Filters**
-   - Filter books by genre, author, uploader, or popularity.
-
-10. **Responsive UI + Dark Mode**
-    - Optimized for all screen sizes and environments.
-
----
-
-## 🛠️ Admin Panel Features
-
-1. **Dashboard**
-   - View total users, books, uploads, reports, and traffic data.
-
-2. **User Management**
-   - Ban users, assign moderators, and monitor user activity.
-
-3. **Book Moderation**
-   - Approve or reject flagged or inappropriate content.
-
-4. **Report Handling**
-   - Manage user-submitted reports on books or profiles.
-
-5. **Analytics**
-   - View popular books, top contributors, and search trends.
-
-6. **Content Guidelines Enforcement**
-   - Auto-check book metadata, size, and keyword violations.
-
----
-
-## 💡 Add-on Ideas (Optional)
-
-- 🔍 **AI-Powered Search** — Search inside books using OCR/text parsing.
-- 📨 **User Newsletter** — Notify users of new books in their interest areas.
-- 📂 **Reading Lists** — Allow users to create custom public/private collections.
-- 🔐 **DRM/Read-Only Mode** — Optional no-download feature for premium books.
-
----
-
-## 👥 User Types
-
-### 1. **Regular User**
-- Can view, upload, share, bookmark, and review books.
-- Has a personal profile and stats dashboard.
-
-### 2. **Admin**
-- Full access to manage users, books, reports, and analytics.
-- Can feature books, moderate content, and generate system insights.
-
----
-
-## 🧰 Tech Stack (Recommended)
-
-- **Frontend:** React.js / Next.js + TailwindCSS
-- **Backend:** Node.js + Express.js
-- **Database:** MongoDB
-- **Authentication:** JWT / OAuth
-- **Storage:** Cloudinary or AWS S3 for PDFs & images
-- **Admin Dashboard:** React Admin / Custom Panel
-- **Search:** ElasticSearch (for full-text search)
-- **Optional AI Search:** Tesseract.js or PDF.js for OCR-based content search
-
----
-
-## 📌 License
-
-MIT License - free to use and modify.
-
----
-
-## 🙌 Contributions
-
-Want to contribute? Submit an issue or create a pull request. Contributions are welcome!
-
+## If anyone wants to contribute, they can become a contributor by submitting a pull request.

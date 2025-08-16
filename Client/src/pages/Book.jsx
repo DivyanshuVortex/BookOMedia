@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSearch } from "../contexts/SearchContext";
 import AnimatedButtons from "../components/AnimatedButtons";
+<<<<<<< HEAD
 import BackGround from "../assets/BackGround-hero.mp4";
+=======
+import BackGround from "../assets/BackGround.mp4";
+>>>>>>> master
 import { useAuth } from "../contexts/LoginContext";
 
 const Book = () => {
@@ -119,7 +123,7 @@ const Book = () => {
       />
 
       <div className="w-auto mx-auto px-4 pt-16 pb-20">
-        <div className="flex flex-col md:flex-row gap-6 justify-evenly bg-[#0e0e20a6] border border-gray-700 rounded-xl shadow-lg p-6">
+        <div className="flex flex-col lg:flex-row gap-6 justify-evenly bg-[#0e0e20a6] border border-gray-700 rounded-xl shadow-lg p-6">
           {/* Book Cover */}
           <div className="flex justify-center md:justify-start">
             <img
@@ -131,7 +135,7 @@ const Book = () => {
           </div>
 
           {/* Book Info */}
-          <div className="flex flex-row sm:flex-col justify-start space-y-2 max-w-2xl">
+          <div className="flex flex-col justify-start space-y-2 max-w-2xl">
             <h2 className="text-2xl ml-4 md:text-3xl font-bold">
               {title}
               <span

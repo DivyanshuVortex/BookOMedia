@@ -3,7 +3,6 @@ import AnimatedButton from "../components/AnimatedButtons";
 import BGV from "../assets/ContactBE.mp4";
 import { Link } from "react-router-dom";
 
-// 🔁 Just for fun
 const quotes = [
   { name: "Tony Stark", quote: "Part of the journey is the end. Everyone wants a happy ending. But it doesn’t always roll that way." },
   { name: "Thanos", quote: "I know what it’s like to lose. To feel so desperately that you're right, yet to fail nonetheless." },
@@ -72,7 +71,7 @@ const Contact = () => {
 
   return (
     <div className="relative min-h-screen text-white overflow-hidden">
-      {/* 🔁 Background Video */}
+      {/* 🎥 Background */}
       <video
         className="absolute top-0 left-0 w-full h-full object-cover"
         autoPlay
@@ -80,18 +79,20 @@ const Contact = () => {
         muted
       >
         <source src={BGV} type="video/mp4" />
-        Your browser does not support the video tag.
       </video>
 
-      {/* 🔳 Overlay */}
+      {/* 🖼️ Overlay */}
       <div className="absolute top-0 left-0 w-full h-full bg-black/40 backdrop-blur-[2px] z-0"></div>
 
-      {/* 📦 Content */}
-      <div className="relative z-10 flex justify-center items-center p-8">
-        <div>
-          <h2 className="text-4xl font-bold mb-4">Get in Touch</h2>
-          <p className="text-lg mb-6">
-            Have questions, suggestions, or want to collaborate? <br /> <br />
+      {/* 📄 Main Content */}
+      <div className="relative z-10 flex justify-center items-center px-4 py-12 md:py-20">
+        <div className="w-full max-w-2xl bg-black/40 backdrop-blur-md p-6 sm:p-8 rounded-lg shadow-xl">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-center">Get in Touch</h2>
+          <p className="text-sm sm:text-base mb-6 text-center">
+            Have questions, suggestions, or want to collaborate?
+          </p>
+
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-6">
             <a
               href="https://github.com/DivyanshuVortex/BookOMedia"
               target="_blank"
@@ -99,16 +100,20 @@ const Contact = () => {
             >
               <AnimatedButton text={"GitHub"} />
             </a>
-            <Link to={"/"}>
-  <div className="ml-4 mb-1 p-2 inline-block px-[22vw] py-2 bg-white/10 border border-white/20 backdrop-blur-sm text-white hover:bg-white/20 transition-all ease-in-out duration-600 rounded-lg font-medium text-sm shadow-sm hover:px-5 w-2xl">
-    ← Go to Home
-  </div>
-</Link>
-            <span className="block mt-4 font-semibold text-blue-400">
+
+            <Link to="/">
+              <div className="p-2 px-6 bg-white/10 border border-white/20 backdrop-blur-sm text-white hover:bg-white/20 transition-all rounded-lg font-medium text-sm text-center shadow-sm">
+                ← Go to Home
+              </div>
+            </Link>
+          </div>
+
+          <div className="text-center mb-6">
+            <span className="block font-semibold text-blue-400 text-sm md:text-2xl">
               divyanshuchandra9027@example.com
             </span>
             <span className="block text-sm text-gray-300">+91 9027832361</span>
-          </p>
+          </div>
 
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
@@ -138,13 +143,11 @@ const Contact = () => {
             </div>
             <button
               type="submit"
-              className="px-6 py-2 bg-blue-800 hover:bg-blue-500 rounded-lg text-white font-semibold"
+              className="w-full sm:w-auto px-6 py-2 bg-blue-800 hover:bg-blue-500 rounded-lg text-white font-semibold transition-all"
             >
               Submit
             </button>
           </form>
-          
-
         </div>
       </div>
     </div>
