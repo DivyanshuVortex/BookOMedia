@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "type": "module",
  "scripts": {
-  "dev": "nodemon index.js",
+  "dev": "nodemon server.js",
   "build": "babel . --out-dir dist --ignore node_modules,dist",
-  "start": "node dist/index.js"
+  "start": "node dist/server.js"
 }
 ,
   "dependencies": {
