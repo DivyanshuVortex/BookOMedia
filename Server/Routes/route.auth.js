@@ -6,6 +6,9 @@ import { suggestion } from "../Controllers/suggestion.controller.js";
 
 const router = express.Router();
 
+router.get("/test", (req, res) => {
+  res.status(200).json({ message: "Auth route is working" });
+});
 router.post("/signup", signup);
 router.post("/signin", signin);
 router.post("/profile", verifyToken, profile);
