@@ -46,7 +46,7 @@ const Profile = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white px-4 py-10">
+    <div className="min-h-screen cursor-none bg-black text-white px-4 py-10">
       <div className="max-w-5xl mx-auto">
         <div className="bg-gray-950 bg-opacity-90 rounded-2xl shadow-xl p-6">
           <h2 className="text-3xl font-bold mb-6 text-center">👤 Profile</h2>
