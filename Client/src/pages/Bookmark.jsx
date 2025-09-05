@@ -76,7 +76,7 @@ const Bookmark = () => {
   }, [bookIds]);
 
  return (
-    <div className="p-4 min-h-screen bg-transparent">
+    <div className="p-4 cursor-none min-h-screen bg-transparent">
       <div className="max-w-6xl mx-auto bg-transparent rounded-2xl p-6">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-400">
           My Bookmarks

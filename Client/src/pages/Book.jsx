@@ -87,7 +87,7 @@ const Book = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center w-full h-screen bg-gray-900">
+      <div className="flex cursor-none flex-col items-center justify-center w-full h-screen bg-gray-900">
         <div className="relative w-32 h-32">
           <div className="absolute inset-0 rounded-full border-4 border-dashed border-white animate-spin" />
           <div className="absolute inset-3 rounded-full border-4 border-double border-white animate-spin opacity-5" />

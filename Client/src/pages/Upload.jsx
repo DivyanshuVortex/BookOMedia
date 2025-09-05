@@ -11,7 +11,7 @@ const UploadBook = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-blue-950 to-gray-900 text-white flex items-center justify-center px-4">
+    <div className="min-h-screen cursor-none bg-gradient-to-b from-black via-blue-950 to-gray-900 text-white flex items-center justify-center px-4">
       <div className="bg-gray-800/60 backdrop-blur-md rounded-2xl shadow-xl p-8 w-full max-w-lg border border-gray-700">
         <h2 className="text-3xl font-semibold text-center mb-6">📚 Upload Your Book</h2>
         

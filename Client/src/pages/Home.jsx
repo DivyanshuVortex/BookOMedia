@@ -65,7 +65,7 @@ const Home = () => {
   const { setBookId } = useSearch();
 
   return (
-    <div className="relative min-h-screen text-white">
+    <div className="relative min-h-screen text-white cursor-none">
       <video
         src={BackGround}
         autoPlay
