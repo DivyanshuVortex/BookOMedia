@@ -2,13 +2,6 @@
 
 A full-stack web application built with modern technologies for seamless user experience and robust backend functionality.
 
-
-### Sample_Video
-https://github.com/user-attachments/assets/01dbb8f4-1431-4cb3-9493-cc37d6a46819
-
-in last there is moblie preview ...
-
-
 ## 🚀 Tech Stack
 
 ### Frontend
@@ -130,4 +123,3 @@ MONGODB_URI=mongodb://localhost:27017/your-database-name
 - [ ] **Advanced Search** - Elastic-search integration
 
 
-## If anyone wants to contribute, they can become a contributor by submitting a pull request.
