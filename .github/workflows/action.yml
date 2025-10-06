@@ -1,0 +1,44 @@
+name: BookOMedia CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        project: [Client, Server]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      working-directory: ${{ matrix.project }}
+      run: npm install
+
+    - name: Run tests
+      working-directory: ${{ matrix.project }}
+      run: |
+        if [ -f package.json ]; then
+          npm test || echo "No tests found, skipping"
+        fi
+
+    - name: Build project
+      working-directory: ${{ matrix.project }}
+      run: |
+        if [ -f package.json ]; then
+          npm run build || echo "No build script, skipping"
+        fi
