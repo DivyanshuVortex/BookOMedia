@@ -42,7 +42,7 @@ const UploadBook = () => {
       formData.append("pdf", pdf);
       formData.append("thumbnail", thumbnail);
 
-      const res = await axios.post("http://localhost:3000/api/upload", formData, {
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (event) => {
           const percent = Math.round((event.loaded * 100) / event.total);
