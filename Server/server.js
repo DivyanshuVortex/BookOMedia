@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { googleBooks, Readgooglebook } from "./api/googleBook.js";
 import routeauth from "./Routes/route.auth.js";
 import mongoConnect from "./config/mongoConnect.js";
+import upload from "./Routes/upload.js";
 
 dotenv.config();
 mongoConnect();
@@ -22,6 +23,7 @@ app.use(cors({
 }));
 
 app.use("/api/user", routeauth);
+app.use("/api/upload", upload);
 
 app.get("/search", async (req, res) => {
   const query = req.query?.title || "Hobby";
