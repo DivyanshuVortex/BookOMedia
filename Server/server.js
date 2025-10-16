@@ -67,7 +67,7 @@ app.get("/search", async (req, res) => {
       pageCount: 0,
       categories: [],
       publishedDate: "",
-      language: book.language || "N/A",
+      language: book.language || "en",
       source: "Database",
     }));
 
