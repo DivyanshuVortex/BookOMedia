@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const UploadBook = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [authors, setAuthors] = useState("");
   const [desc, setDesc] = useState("");
@@ -9,6 +11,7 @@ const UploadBook = () => {
   const [thumbnail, setThumbnail] = useState(null);
   const [preview, setPreview] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [lang, setLang] = useState("");
   const [progress, setProgress] = useState(0);
   const [uploadedData, setUploadedData] = useState(null);
   const [slowNetwork, setSlowNetwork] = useState(false);
@@ -24,7 +27,7 @@ const UploadBook = () => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    if (!title || !authors || !pdf || !thumbnail) {
+    if (!title || !authors || !pdf || !thumbnail || !desc || !lang ) {
       alert("Please fill all required fields!");
       return;
     }
@@ -41,8 +44,9 @@ const UploadBook = () => {
       formData.append("description", desc);
       formData.append("pdf", pdf);
       formData.append("thumbnail", thumbnail);
+      formData.append("language", lang);
 
-      const res = await axios.post("http://localhost:3000/api/upload", formData, {
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (event) => {
           const percent = Math.round((event.loaded * 100) / event.total);
@@ -53,11 +57,13 @@ const UploadBook = () => {
 
       setUploadedData(res.data);
       setSuccess(true);
+   
 
       setTimeout(() => {
         setUploading(false);
         setProgress(0);
         setSuccess(false);
+        navigate("/"); 
       }, 1500);
     } catch (err) {
       console.error(err);
@@ -102,7 +108,7 @@ const UploadBook = () => {
       )}
 
       <div
-        className={`bg-gray-800/60 backdrop-blur-md rounded-2xl shadow-xl p-8 w-full max-w-lg border border-gray-700 relative z-10 ${
+        className={`bg-gray-800/60 backdrop-blur-md rounded-2xl shadow-xl p-9 w-full max-w-lg border border-gray-700 relative z-10 ${
           uploading ? "blur-sm pointer-events-none" : ""
         }`}
       >
@@ -133,6 +139,20 @@ const UploadBook = () => {
             />
           </div>
 
+          <div>
+            <label className="block text-sm text-gray-300 mb-1">Language *</label>
+            <select name="language" id="language" value={lang} onChange={(e) => setLang(e.target.value)} required className="w-full bg-gray-900 text-white border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-700">
+              <option value="">Select a language</option>
+              <option value="en">English</option>
+              <option value="es">Spanish</option>
+              <option value="fr">French</option>
+              <option value="de">German</option>
+              <option value="zh">Chinese</option>
+              <option value="ja">Japanese</option>
+              <option value="hi">Hindi</option>
+              <option value="ar">Arabic</option>
+            </select>
+          </div>
           <div>
             <label className="block text-sm text-gray-300 mb-1">Description</label>
             <textarea
@@ -185,32 +205,8 @@ const UploadBook = () => {
         {uploadedData && !uploading && (
           <div className="mt-6 text-center">
             <h3 className="text-lg font-semibold mb-2">✅ Upload Successful!</h3>
-            {uploadedData.pdfUrl && (
-              <>
-                <p className="text-sm text-gray-400">PDF URL:</p>
-                <a
-                  href={uploadedData.pdfUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-blue-400 block truncate"
-                >
-                  {uploadedData.pdfUrl}
-                </a>
-              </>
-            )}
-            {uploadedData.thumbnailUrl && (
-              <>
-                <p className="text-sm text-gray-400 mt-2">Thumbnail URL:</p>
-                <a
-                  href={uploadedData.thumbnailUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-blue-400 block truncate"
-                >
-                  {uploadedData.thumbnailUrl}
-                </a>
-              </>
-            )}
+            <p className="text-sm text-gray-300">Title: {uploadedData.title}</p>
+            <p className="text-sm text-gray-300">Authors: {uploadedData.authors}</p>
           </div>
         )}
       </div>

@@ -34,7 +34,6 @@ const Bookmark = () => {
           title: book.title,
           author: book.authors?.[0] || "Unknown",
           thumbnail: book.thumbnailUrl,
-          pageCount: "N/A",
           publishedYear: "N/A",
         }));
 
@@ -110,9 +109,7 @@ const Bookmark = () => {
                 <p className="text-gray-400 text-sm">
                   by {book.author} in <span>{book.publishedYear === "N/A" ? "2025" : book.publishedYear}</span>
                 </p>
-                <p className="text-blue-600 text-sm mt-2">
-                  Total pages: {book.pageCount}
-                </p>
+                <span className="text-blue-600 text-sm">Quick View</span>
               </Link>
             ))}
           </div>
