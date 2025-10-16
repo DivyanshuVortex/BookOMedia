@@ -10,7 +10,7 @@ const ReadBook = () => {
   const [nightMode, setNightMode] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [embedUrl, setEmbedUrl] = useState("");
-  const [showShareOption, setShowShareOptions] = useState(false);
+  const [showShareOptions, setShowShareOptions] = useState(false);
 
   const currentUrl = window.location.href;
 
@@ -19,33 +19,38 @@ const ReadBook = () => {
     alert("URL copied to clipboard!");
   };
 
+  const handleIframeLoad = () => {
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     if (!finalBookId) return;
 
     const fetchEmbedUrl = async () => {
+      // Default Google Books embed
       let url = `https://books.google.co.in/books?id=${finalBookId}&pg=PA0&output=embed`;
 
-      // 1️⃣ Attempt backend fallback if Google Books fails
       try {
+        // Backend fallback
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/bookreads/${finalBookId}`
         );
         const data = await res.json();
-        console.log("📚 Backend book data:", data);
 
         if (data?.pdfUrl) {
           url = `https://docs.google.com/gview?url=${encodeURIComponent(
             data.pdfUrl
           )}&embedded=true`;
         }
-
-        console.log("✅ Using backend PDF URL:", url);
       } catch (err) {
-        console.error("Error fetching book from backend:", err);
+        console.warn("Backend fetch failed, using Google Books embed:", err);
       }
 
       setEmbedUrl(url);
-      setIsLoading(false);
+
+      // Ensure loading is cleared after short delay if iframe fails to load
+      const fallbackTimeout = setTimeout(() => setIsLoading(false), 1000);
+      return () => clearTimeout(fallbackTimeout);
     };
 
     fetchEmbedUrl();
@@ -61,7 +66,7 @@ const ReadBook = () => {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center cursor-none w-full h-screen bg-gray-900">
+      <div className="flex flex-col items-center justify-center w-full h-screen bg-gray-900">
         <div className="relative w-32 h-32">
           <div className="absolute inset-0 rounded-full border-4 border-dashed border-white animate-spin" />
           <div className="absolute inset-3 rounded-full border-4 border-double border-white animate-spin opacity-5" />
@@ -77,7 +82,7 @@ const ReadBook = () => {
 
   return (
     <div className="w-full h-screen flex flex-col">
-      {/* Top buttons */}
+      {/* Top Buttons */}
       <div className="flex justify-center gap-4 py-4 relative">
         <button
           onClick={() => setNightMode((prev) => !prev)}
@@ -98,25 +103,61 @@ const ReadBook = () => {
         </button>
       </div>
 
-      {/* Share options */}
-      {showShareOption && (
-        <div className="absolute m-5 sm:right-[20%] sm:top-[22%] z-50 bg-gray-300 border border-gray-200 rounded-lg shadow-xl p-4 w-72 transition-all">
-          <div className="flex items-center gap-2 mb-4">
+      {/* Share Options Overlay */}
+      {showShareOptions && (
+        <div className="absolute m-5 sm:right-[20%] sm:top-[22%] z-50 bg-gray-400 border border-gray-200 rounded-lg shadow-xl p-4 w-72 transition-all ease-in-out duration-300">
+          {/* URL + Copy */}
+          <div className="flex items-center gap-2 mb-4 text-black">
             <input
               type="text"
               value={currentUrl}
               readOnly
-              className="flex-1 px-3 py-2 text-sm border rounded-md bg-gray-100 text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="flex-1 px-2 py-1 border rounded"
             />
             <button
               onClick={handleCopy}
-              className="px-3 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700"
+              className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
             >
               Copy
             </button>
           </div>
+
+          {/* Social Icons */}
+          <div className="flex justify-between px-4">
+            {["twitter", "facebook", "whatsapp", "telegram"].map((platform) => (
+              <a
+                key={platform}
+                href={
+                  platform === "twitter"
+                    ? `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                        currentUrl
+                      )}`
+                    : platform === "facebook"
+                    ? `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                        currentUrl
+                      )}`
+                    : platform === "whatsapp"
+                    ? `https://api.whatsapp.com/send?text=${encodeURIComponent(
+                        currentUrl
+                      )}`
+                    : `https://t.me/share/url?url=${encodeURIComponent(currentUrl)}`
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:scale-150 duration-500"
+                title={platform.charAt(0).toUpperCase() + platform.slice(1)}
+              >
+                <img
+                  src={`https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/${platform}.svg`}
+                  alt={platform}
+                  className="w-6 h-6"
+                />
+              </a>
+            ))}
+          </div>
+
           <button
-            className="bg-black w-full rounded-2xl m-1 mt-5 p-2 hover:bg-gray-400 hover:text-black hover:underline transition duration-300"
+            className="bg-black w-full rounded-2xl m-1 mt-5 p-2 hover:bg-blue-700 hover:text-white hover:underline transition duration-300"
             onClick={() => setShowShareOptions(false)}
           >
             Close
@@ -124,14 +165,15 @@ const ReadBook = () => {
         </div>
       )}
 
-      {/* Iframe to show book */}
-      <div className="flex-1 flex justify-center items-center bg-gradient-to-b from-black via-gray-900 to-gray-400 rounded-2xl">
+      {/* Iframe */}
+      <div className="w-full h-screen rounded-2xl bg-gradient-to-b from-black via-gray-900 to-gray-400 flex justify-center items-center">
         <iframe
           title="Book Preview"
           src={embedUrl}
+          onLoad={handleIframeLoad}
           loading="lazy"
           width="90%"
-          height="90%"
+          height="80%"
           className="transition-all duration-1000"
           style={{
             border: 0,

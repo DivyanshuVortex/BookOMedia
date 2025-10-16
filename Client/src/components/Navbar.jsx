@@ -1,174 +1,158 @@
-import React, { useState , useEffect  } from "react";
-import { useSearch} from "../contexts/SearchContext";
+import React, { useState, useEffect } from "react";
+import { useSearch } from "../contexts/SearchContext";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
+import { Menu, X, Search, Home, UploadCloud, Bookmark, User } from "lucide-react";
 
 const Navbar = () => {
   const { search, setSearch } = useSearch();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const navItems = [
+    { label: "Home", path: "/", icon: Home },
+    { label: "Upload", path: "/upload", icon: UploadCloud },
+    { label: "Bookmarks", path: "/bookmarks", icon: Bookmark },
+    { label: "Profile", path: "/profile", icon: User },
+  ];
 
   const handleNavigation = (path) => {
     navigate(path);
-    setMenuOpen(false); // Close menu on navigation
-  };
-  const [isScrolled, setIsScrolled] = useState(false);
-
-useEffect(() => {
-  const handleScroll = () => {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    setIsScrolled(scrollTop > 5);
+    setMenuOpen(false);
   };
 
-  // Call once on mount in case page is already scrolled
-  handleScroll();
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      setIsScrolled(scrollTop > 20);
+    };
 
-  window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  return () => {
-    window.removeEventListener("scroll", handleScroll);
-  };
-}, []);
-
-
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "unset";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [menuOpen]);
 
   return (
-    <div>
+    <header className="relative top-0 left-0 right-0 z-50">
       <nav
-  className={`z-50 px-6 py-4 shadow-md flex justify-between items-center w-full transition-all duration-100 ${
-    isScrolled ?"bg-transparent top-1 scale-99 opacity-20": "backdrop-blur-sm bg-[#0e0e20a6] text-white px-6 py-4 shadow-md flex justify-between items-center w-full"
-  }`}
->
-
-        {/* Logo */}
+        className={`px-4 sm:px-8 py-3 flex justify-between items-center w-full transition-all duration-300 ease-in-out ${
+          isScrolled
+            ? "backdrop-blur-lg bg-[#0e0e20]/90 shadow-xl text-white border-b border-gray-700"
+            : "bg-[#0e0e20] text-white"
+        }`}
+      >
         <div
-          className="text-2xl font-bold cursor-pointer"
+          className="text-2xl font-extrabold cursor-pointer tracking-wider text-white/90 hover:text-white transition-colors"
           onClick={() => handleNavigation("/")}
         >
           BookOMedia
         </div>
 
-        {/* Hamburger Button for Small Screens */}
-        <div className="sm:hidden">
+        <div className="sm:hidden flex items-center gap-3">
           <button
-            className="text-white text-2xl focus:outline-none"
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={() => setSearch(!search)}
+            aria-label={search ? "Close search" : "Open search"}
+            className="text-white p-2 rounded-full hover:bg-white/10 transition-colors"
           >
-            {menuOpen ? "✖" : "☰"}
+            <Search size={22} />
+          </button>
+          <button
+            className="text-white p-2 rounded-full hover:bg-white/10 transition-colors focus:outline-none"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
-        {/* Navigation + Search - Desktop */}
         <div className="hidden sm:flex gap-8 items-center">
-          <ul className="flex gap-6 text-lg">
-            <li>
-              <a
-                onClick={() => handleNavigation("/")}
-                className="relative cursor-pointer after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full"
-              >
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() => handleNavigation("/upload")}
-                className="relative cursor-pointer after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full"
-              >
-                Upload
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() => handleNavigation("/bookmarks")}
-                className="relative cursor-pointer after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full"
-              >
-                Bookmarks
-              </a>
-            </li>
-            <li>
-              <a
-                onClick={() => handleNavigation("/profile")}
-                className="relative cursor-pointer after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full"
-              >
-                Profile
-              </a>
-            </li>
+          <ul className="flex gap-6 text-base font-medium">
+            {navItems.map((item) => (
+              <li key={item.label}>
+                <a
+                  onClick={() => handleNavigation(item.path)}
+                  className="relative cursor-pointer py-1 text-gray-300 hover:text-white transition-colors duration-200 
+                  after:absolute after:left-0 after:-bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
           </ul>
 
-          {/* Search Button */}
-          {search ? (
-            <button
-              onClick={() => setSearch(false)}
-              className="ml-4 px-4 py-2 bg-white text-black rounded-md hover:bg-blue-950 hover:text-white border hover:border-white transition-all duration-300"
-            >
-              Close
-            </button>
-          ) : (
-            <button
-              onClick={() => setSearch(true)}
-              className="ml-4 px-4 py-2 bg-white text-black rounded-md hover:bg-blue-950 hover:text-white border hover:border-white transition-all duration-300"
-            >
-              Search
-            </button>
-          )}
+          <button
+            onClick={() => setSearch(!search)}
+            className={`flex items-center gap-2 px-4 py-2 text-sm rounded-full transition-all duration-300 shadow-md border-2 ${
+              search
+                ? "bg-white text-[#0e0e20] hover:bg-gray-200 border-white"
+                : "bg-transparent text-white border-gray-400 hover:border-white"
+            }`}
+          >
+            {search ? (
+              <>
+                <X size={18} /> Close
+              </>
+            ) : (
+              <>
+                <Search size={18} /> Search
+              </>
+            )}
+            <span className="text-xs bg-white/10 px-2 py-0.5 rounded-full ml-1 hidden lg:inline text-gray-400">
+              Ctrl/Cmd+S
+            </span>
+          </button>
         </div>
       </nav>
 
       {menuOpen && (
         <div
-          className="sm:hidden bg-[#0e0e20] text-white px-6 py-6 shadow-lg space-y-4"
-          style={{
-            perspective: "800px", // This gives the 3D effect
-          }}
+          className="fixed inset-0 top-[60px] bg-black/50 backdrop-blur-sm sm:hidden transition-opacity duration-300"
+          onClick={() => setMenuOpen(false)}
         >
-          {[
-            { label: "Home", path: "/" },
-            { label: "Upload", path: "/upload" },
-            { label: "Bookmarks", path: "/bookmarks" },
-            { label: "Profile", path: "/profile" },
-          ].map((item, i) => (
-            <div
-              key={item.label}
-              onClick={() => handleNavigation(item.path)}
-              className="text-lg cursor-pointer px-2 py-2 rounded-md hover:bg-white hover:text-black transition-all duration-300"
-              style={{
-                animation: "slideIn 0.6s ease-out forwards",
-                animationDelay: `${i * 120}ms`,
-                transformStyle: "preserve-3d",
-              }}
-            >
-              {item.label}
-            </div>
-          ))}
-
           <div
-            style={{
-              animation: "slideIn 0.6s ease-out forwards",
-              animationDelay: "500ms",
-              transformStyle: "preserve-3d",
-            }}
+            className="bg-[#0e0e20] text-white shadow-xl space-y-2 p-4 transition-transform duration-300 ease-out transform origin-top w-full"
+            onClick={(e) => e.stopPropagation()}
           >
-            {search ? (
-              <button
-                onClick={() => setSearch(false)}
-                className="w-full px-4 py-2 bg-white text-black rounded-md hover:bg-blue-950 hover:text-white border hover:border-white transition-all duration-300"
+            {navItems.map((item) => (
+              <div
+                key={item.label}
+                onClick={() => handleNavigation(item.path)}
+                className="flex items-center gap-3 text-lg cursor-pointer px-4 py-3 rounded-lg bg-gray-800/50 hover:bg-gray-700 transition-all duration-200"
               >
-                Close
-              </button>
-            ) : (
+                <item.icon size={20} /> {item.label}
+              </div>
+            ))}
+
+            <div className="pt-4">
               <button
-                onClick={() => setSearch(true)}
-                className="w-full px-4 py-2 bg-white text-black rounded-md hover:bg-blue-950 hover:text-white border hover:border-white transition-all duration-300"
+                onClick={() => {
+                  setSearch(!search);
+                  setMenuOpen(false);
+                }}
+                className={`w-full flex justify-center items-center gap-2 px-4 py-3 text-base rounded-lg transition-all duration-300 shadow-md ${
+                  search
+                    ? "bg-white text-black hover:bg-gray-200"
+                    : "bg-gray-700 hover:bg-gray-600 text-white"
+                }`}
               >
-                Search
+                {search ? <X size={20} /> : <Search size={20} />}
+                {search ? "Close Search" : "Open Search"}
               </button>
-            )}
+            </div>
           </div>
         </div>
       )}
 
       <SearchBar />
-    </div>
+    </header>
   );
 };
 

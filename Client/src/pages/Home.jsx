@@ -14,10 +14,10 @@ import B6 from '../assets/B6.jpeg';
 
 const books = [
   {
-    id: "wrOQLV6xB-wC",
-    title: "Harry Potter and the Sorcerer's Stone",
-    author: "J.K. Rowling",
-    pageCount: 309,
+    id: "pOu_DwAAQBAJ",
+    title: "She's Hard to Get",
+    author: "Zi MengXiaoCao",
+    pageCount: 836,
     thumbnail: B1
   },
   {

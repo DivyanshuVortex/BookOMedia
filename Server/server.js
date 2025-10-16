@@ -31,14 +31,9 @@ app.get("/search", async (req, res) => {
   const query = req.query?.title || "Hobby";
   
   try {
-    console.log("🔍 Searching for:", query);
 
-    // Fetch both sources
     const respGoogle = await googleBooks(query);
     const respMongo = await mongoBook(query) || [];
-
-    console.log("📘 MongoDB Books:", respMongo);
-    console.log("📗 Raw Google Response:", respGoogle);
 
     const googleItems = respGoogle?.data?.items || [];
 
@@ -66,7 +61,7 @@ app.get("/search", async (req, res) => {
       title: book.title,
       authors: book.authors,
       description: book.description,
-      thumbnail: book.thumbnailUrl || "", // ✅ renamed for frontend
+      thumbnail: book.thumbnailUrl || "",
       previewLink: book.pdfUrl || "",
       infoLink: "",
       pageCount: 0,
@@ -79,13 +74,8 @@ app.get("/search", async (req, res) => {
     // Combine both
     const allBooks = [...formattedMongoBooks, ...formattedGoogleBooks];
 
-    console.log("📚 Final Combined Books Count:", allBooks.length);
-    console.log("🖼️ Sample thumbnail:", allBooks[0]?.thumbnail);
-
     res.json(allBooks);
   } catch (error) {
-    console.error("❌ Error in /search route:", error.message);
-    console.error("🪲 Stack trace:", error.stack);
     res.status(500).json({ error: "Failed to fetch books data" });
   }
 });
@@ -93,25 +83,19 @@ app.get("/search", async (req, res) => {
 
 app.get("/book/:bookId", async (req, res) => {
   const bookId = req.params?.bookId;
-  console.log("📗 Incoming request for bookId:", bookId);
 
   try {
     let response = null;
 
-    // 1️⃣ Check if it's a MongoDB ObjectId
     if (mongoose.Types.ObjectId.isValid(bookId)) {
-      console.log("🔹 bookId is a valid MongoDB ObjectId, querying MongoDB...");
       const result = await Readmongobook(bookId);
 
       if (!result?.data) {
-        console.log("❌ Book not found in MongoDB");
         return res.status(404).json({ error: "Book not found in MongoDB" });
       }
 
       const book = result.data;
-      console.log("📦 Mongo response (actual book):", book);
 
-      // Normalize MongoDB book to Google-like structure
       const mongoInfo = {
         id: book.id?.toString() || book._id?.toString(),
         volumeInfo: {
@@ -128,7 +112,6 @@ app.get("/book/:bookId", async (req, res) => {
         },
       };
 
-      console.log("📘 Sending MongoDB book in Google-like format:", mongoInfo);
       return res.json({
         id: mongoInfo.id,
         title: mongoInfo.volumeInfo.title,
@@ -144,24 +127,21 @@ app.get("/book/:bookId", async (req, res) => {
       });
     }
 
-    // 2️⃣ Otherwise, treat as Google Books ID
-    console.log("🌍 bookId is NOT a MongoDB ID, querying Google Books API...");
+
     response = await Readgooglebook(bookId);
 
     if (!response?.data) {
-      console.log("❌ Book not found in Google Books API");
+    
       return res.status(404).json({ error: "Book not found in Google Books API" });
     }
 
     const info = response.data.volumeInfo;
-    console.log("📘 Google volumeInfo found:", !!info);
 
     if (!info) {
       console.log("❌ Book missing volumeInfo in Google API");
       return res.status(404).json({ error: "Book volumeInfo not found in Google API" });
     }
 
-    console.log("📘 Sending Google API book:", response.data.id);
     res.json({
       id: response.data.id,
       title: info.title || "Untitled",
@@ -186,7 +166,6 @@ app.get("/book/:bookId", async (req, res) => {
 
 app.get("/bookreads/:bookId", async (req, res) => {
   const { bookId } = req.params;
-  console.log("📗 Incoming request for bookId:", bookId);
 
   try {
     // Validate ObjectId
