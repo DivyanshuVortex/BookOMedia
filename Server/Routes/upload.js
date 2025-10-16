@@ -60,6 +60,7 @@ router.post(
         description: req.body.description,
         pdfUrl: pdfUpload.secure_url,
         thumbnailUrl: thumbnailUpload.secure_url,
+        language: req.body.language,
       });
 
       await newBook.save();
