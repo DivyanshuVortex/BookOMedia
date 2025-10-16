@@ -23,7 +23,7 @@ A full-stack web application built with modern technologies for seamless user ex
 
 ## 🛠️ Installation & Setup
 
-### Method 1: Using Docker (Recommended)
+### Method 1: Using Docker
 
 1. **Clone the repository**
    ```bash
@@ -40,7 +40,7 @@ A full-stack web application built with modern technologies for seamless user ex
    - Frontend: http://localhost:5173
    - Backend API: http://localhost:3000
 
-### Method 2: Traditional Setup
+### Method 2: Traditional Setup ( my preference )
 
 #### Prerequisites
 - Node.js (v16 or higher)
@@ -98,9 +98,12 @@ Create a `.env` file in the backend directory with the following variables:
 # Server Configuration
 PORT=3000
 
-# Database
-MONGODB_URI=mongodb://localhost:27017/your-database-name
-# For MongoDB Atlas: mongodb+srv://username:password@cluster.mongodb.net/database-name
+MONGO_URL="yours"
+GOOGLE_BOOKS_API_KEY=yours
+PORT=3000
+CLOUDINARY_CLOUD_NAME=yours
+CLOUDINARY_API_KEY=yours
+CLOUDINARY_API_SECRET=yours
 ```
 
 
@@ -113,13 +116,8 @@ MONGODB_URI=mongodb://localhost:27017/your-database-name
 - **Persistent Storage** - LocalStorage for client-side data
 - **MongoDB Integration** - Mongoose ODM for database operations
 - **Containerized** - Docker support for easy deployment
+- **File Upload System** - Implement image/document upload functionality
+- **Cloud Deployment** - Deploy to AWS/Heroku/Vercel
 
-
-## 🚀 Future Plans
-
-- [ ] **File Upload System** - Implement image/document upload functionality
-- [ ] **Cloud Deployment** - Deploy to AWS/Heroku/Vercel
-- [ ] **Email Notifications** - Add email service integration
-- [ ] **Advanced Search** - Elastic-search integration
 
 
