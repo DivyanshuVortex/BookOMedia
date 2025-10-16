@@ -16,7 +16,9 @@ A full-stack web application built with modern technologies for seamless user ex
 - **JWT** - JSON Web Tokens for authentication
 - **bcrypt** - Password hashing library
 - **Zod** - TypeScript-first schema validation
+- **Multer** - For holding pdf and upload to **Cloudinary**
 
+  
 ### DevOps & Tools
 - **Docker** - Containerization platform
 - **Docker Compose** - Multi-container Docker applications
