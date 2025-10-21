@@ -23,7 +23,9 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
+app.get('/wake-me-up', (req,res)=>{
+  res.send("Backend is UP 🛜🛜")
+})
 app.use("/api/user", routeauth);
 app.use("/api/upload", upload);
 

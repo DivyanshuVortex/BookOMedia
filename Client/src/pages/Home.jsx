@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useSearch } from "../contexts/SearchContext";
 import Hero from "../components/Hero";
 import BackGround from "../assets/BackGround.mp4";
+import Waker from "../components/Waker";
+
 
 import B1 from '../assets/B1.jpeg';
 import B2 from '../assets/B2.jpeg';
@@ -66,6 +68,7 @@ const Home = () => {
 
   return (
     <div className="relative min-h-screen text-white cursor-none">
+      <Waker />
       <video
         src={BackGround}
         autoPlay
