@@ -26,7 +26,9 @@ app.use(
 
 app.use("/api/user", routeauth);
 app.use("/api/upload", upload);
-
+app.get("/waker",(req,res)=>{
+  res.status(200).json({msg : "Backend is UP"})
+})
 app.get("/search", async (req, res) => {
   const query = req.query?.title || "Hobby";
   
