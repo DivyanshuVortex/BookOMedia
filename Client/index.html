@@ -4,6 +4,109 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+<script>
+(function() {
+  const TEST_ID = "test_rlta8lpt4";
+  const API_BASE = "https://us-central1-ruxailab-gsoc-aa8d7.cloudfunctions.net"; // Verify your region!
+
+  // --- EDITOR MODE ---
+  if (window.location.href.includes('rux_editor=true')) {
+      console.log('RUXAILAB: Launching Editor...');
+      setTimeout(() => {
+          const s = document.createElement('script');
+          s.textContent = "\n(function() {\n    console.log('RUXAILAB Editor Initializing...');\n    \n    // Create UI Overlay\n    const overlay = document.createElement('div');\n    overlay.id = 'rux-editor-overlay';\n    overlay.style.cssText = 'all:initial;position:fixed;bottom:20px;right:20px;width:300px;background:white;box-shadow:0 4px 12px rgba(0,0,0,0.2);border-radius:8px;z-index:2147483647;padding:16px;font-family:sans-serif;border:2px solid #2196F3;display:block !important;visibility:visible !important;opacity:1 !important;';\n    overlay.innerHTML = `\n        <div style=\"font-weight:bold;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;color:#333;font-size:16px;\">\n            <span>RUXAILAB Editor</span>\n            <span style=\"font-size:12px;color:#2196F3;background:#e3f2fd;padding:2px 6px;border-radius:4px;\">Active</span>\n        </div>\n        <div id=\"rux-status\" style=\"margin-bottom:12px;font-size:14px;color:#666;line-height:1.4;\">\n            Hover and click an element to edit.\n        </div>\n        <div id=\"rux-controls\" style=\"display:none\">\n            <input id=\"rux-value\" type=\"text\" placeholder=\"Value\" style=\"width:100%;margin-bottom:8px;padding:8px;border:1px solid #ddd;border-radius:4px;\">\n            <div style=\"display:flex;gap:8px;margin-bottom:8px;\">\n                <button id=\"rux-btn-text\" style=\"flex:1;padding:6px;cursor:pointer;background:#f5f5f5;border:1px solid #ddd;border-radius:4px;\">Change Text</button>\n                <button id=\"rux-btn-color\" style=\"flex:1;padding:6px;cursor:pointer;background:#f5f5f5;border:1px solid #ddd;border-radius:4px;\">Color</button>\n                <button id=\"rux-btn-hide\" style=\"flex:1;padding:6px;cursor:pointer;background:#f5f5f5;border:1px solid #ddd;border-radius:4px;\">Hide</button>\n            </div>\n            <button id=\"rux-btn-html\" style=\"width:100%;margin-bottom:8px;padding:6px;cursor:pointer;background:#fff3e0;border:1px solid #ffcc80;border-radius:4px;\">&lt;&gt; Edit HTML</button>\n            <button id=\"rux-save\" style=\"width:100%;padding:8px;background:#2196F3;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;\">Save Change</button>\n        </div>\n    `;\n    document.body.appendChild(overlay);\n\n    let selectedEl = null;\n    let highlightBox = document.createElement('div');\n    highlightBox.style.cssText = 'position:absolute;border:2px solid #2196F3;pointer-events:none;z-index:999998;transition:all 0.1s;display:none;';\n    document.body.appendChild(highlightBox);\n\n    // Hover Highlight\n    document.addEventListener('mouseover', (e) => {\n        if (overlay.contains(e.target) || highlightBox.contains(e.target)) return;\n        \n        const rect = e.target.getBoundingClientRect();\n        highlightBox.style.display = 'block';\n        highlightBox.style.top = (window.scrollY + rect.top) + 'px';\n        highlightBox.style.left = (window.scrollX + rect.left) + 'px';\n        highlightBox.style.width = rect.width + 'px';\n        highlightBox.style.height = rect.height + 'px';\n    });\n    \n    // Click Select\n    document.addEventListener('click', (e) => {\n        if (overlay.contains(e.target)) return;\n        \n        e.preventDefault();\n        e.stopPropagation();\n        \n        selectedEl = e.target;\n        \n        // Update UI\n        const status = document.getElementById('rux-status');\n        const controls = document.getElementById('rux-controls');\n        const valueInput = document.getElementById('rux-value');\n        \n        // Generate a unique-ish selector\n        let selector = selectedEl.tagName.toLowerCase();\n        if (selectedEl.id) selector += '#' + selectedEl.id;\n        else if (selectedEl.className) selector += '.' + selectedEl.className.trim().split(/s+/)[0];\n        \n        status.innerHTML = 'Selected: <code style=\"background:#eee;padding:2px 4px;border-radius:2px\">' + selector + '</code>';\n        controls.style.display = 'block';\n        valueInput.value = selectedEl.innerText.substring(0, 50);\n        \n        // Setup Button Actions\n        document.getElementById('rux-btn-text').onclick = () => {\n             const val = document.getElementById('rux-value').value;\n             selectedEl.innerText = val;\n             sendChange(selector, 'innerText', val);\n        };\n        \n        document.getElementById('rux-btn-color').onclick = () => {\n             const val = prompt('Enter color (e.g. red, #00ff00):');\n             if(val) {\n                 selectedEl.style.color = val;\n                 sendChange(selector, 'color', val);\n             }\n        };\n        \n        document.getElementById('rux-btn-hide').onclick = () => {\n             selectedEl.style.display = 'none';\n             sendChange(selector, 'display', 'none');\n        };\n        \n        document.getElementById('rux-btn-html').onclick = () => {\n            htmlEditingEl = selectedEl;\n            document.getElementById('rux-html-content').value = htmlEditingEl.innerHTML;\n            htmlModal.style.display = 'flex';\n        };\n    }, true);\n\n    // HTML Editor Modal\n    const htmlModal = document.createElement('div');\n    htmlModal.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%, -50%);width:400px;background:white;box-shadow:0 0 20px rgba(0,0,0,0.3);border-radius:8px;z-index:9999999;padding:16px;font-family:sans-serif;display:none;flex-direction:column;';\n    htmlModal.innerHTML = `\n        <div style=\"font-weight:bold;margin-bottom:8px\">Edit HTML</div>\n        <textarea id=\"rux-html-content\" style=\"width:100%;height:200px;margin-bottom:12px;padding:8px;border:1px solid #ddd;border-radius:4px;font-family:monospace\"></textarea>\n        <div style=\"display:flex;gap:8px;justify-content:flex-end\">\n            <button id=\"rux-html-cancel\" style=\"padding:8px 16px;cursor:pointer;background:#f5f5f5;border:1px solid #ddd;border-radius:4px;\">Cancel</button>\n            <button id=\"rux-html-save\" style=\"padding:8px 16px;background:#2196F3;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:bold;\">Save HTML</button>\n        </div>\n    `;\n    document.body.appendChild(htmlModal);\n\n    let htmlEditingEl = null;\n\n    // Double Click to Edit HTML\n    document.addEventListener('dblclick', (e) => {\n        if (overlay.contains(e.target) || htmlModal.contains(e.target)) return;\n        \n        e.preventDefault();\n        e.stopPropagation();\n        \n        htmlEditingEl = e.target;\n        document.getElementById('rux-html-content').value = htmlEditingEl.innerHTML;\n        htmlModal.style.display = 'flex';\n    }, true);\n    \n    // Save Action\n    document.getElementById('rux-html-save').onclick = () => {\n        if(htmlEditingEl) {\n            const newHtml = document.getElementById('rux-html-content').value;\n            htmlEditingEl.innerHTML = newHtml;\n            \n             // Generate selector\n            let selector = htmlEditingEl.tagName.toLowerCase();\n            if (htmlEditingEl.id) selector += '#' + htmlEditingEl.id;\n            else if (htmlEditingEl.className) selector += '.' + htmlEditingEl.className.trim().split(/s+/)[0];\n            \n            sendChange(selector, 'innerHTML', newHtml);\n            htmlModal.style.display = 'none';\n            htmlEditingEl = null;\n        }\n    };\n    \n    // Cancel Action\n    document.getElementById('rux-html-cancel').onclick = () => {\n        htmlModal.style.display = 'none';\n        htmlEditingEl = null;\n    };\n\n    function sendChange(selector, property, value) {\n        const msg = {\n            type: 'RUX_EDITOR_CHANGE',\n            change: { selector, property, value }\n        };\n        console.log('Sending change:', msg);\n        \n        const targetWindow = window.opener || window.parent;\n        \n        if (targetWindow && targetWindow !== window) {\n            targetWindow.postMessage(msg, '*');\n            \n            // Flash success\n            const btn = document.getElementById('rux-save');\n            const originalText = btn.innerText;\n            btn.innerText = 'Sent!';\n            btn.style.background = '#4CAF50';\n            setTimeout(() => {\n                btn.innerText = originalText;\n                btn.style.background = '#2196F3';\n            }, 1000);\n        } else {\n            alert('Parent window not found. Change previewed only.');\n        }\n    }\n})();\n";
+          document.body.appendChild(s);
+      }, 500);
+      return; // Skip A/B logic in editor mode
+  }
+
+  // --- A/B TEST LOGIC ---
+  const STORAGE_KEY = 'rux_ab_uid';
+  let userId = localStorage.getItem(STORAGE_KEY);
+  if (!userId) {
+      userId = 'user_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem(STORAGE_KEY, userId);
+  }
+
+  async function initTest() {
+      try {
+          // 1. Fetch Config
+          const res = await fetch(`${API_BASE}/getPublicTestConfig?testId=${TEST_ID}`);
+          const data = await res.json();
+          
+          if (!data.variants || data.variants.length === 0) return;
+          if (data.status !== 'active') return; // Don't run if not active
+
+          // 2. Check Local Assignment or Assign New
+          let variantName = localStorage.getItem(`rux_variant_${TEST_ID}`);
+          
+          if (!variantName) {
+              // Weighted Random Assignment
+              const variants = data.variants;
+              let total = variants.reduce((acc, v) => acc + (parseInt(v.weight)||0), 0);
+              let r = Math.random() * total;
+              for(let v of variants) {
+                  let w = parseInt(v.weight)||0;
+                  if(r < w) { variantName = v.name; break; }
+                  r -= w;
+              }
+              
+              localStorage.setItem(`rux_variant_${TEST_ID}`, variantName);
+              
+              // Track Assignment
+              trackEvent('assignment', variantName);
+          }
+          
+          console.log('RUXAILAB Variant:', variantName);
+
+          // 3. Apply Visual Changes
+          const variantData = data.variants.find(v => v.name === variantName);
+          if (variantData && variantData.changes) {
+              // Wait for DOM?
+              if (document.readyState === 'loading') {
+                  document.addEventListener('DOMContentLoaded', () => applyChanges(variantData.changes));
+              } else {
+                  applyChanges(variantData.changes);
+              }
+          }
+          
+          // Expose global tracker
+          window.ruxTrack = (eventName, val) => trackEvent(eventName, variantName, val);
+
+      } catch (e) {
+          console.error('RUXAILAB Error:', e);
+      }
+  }
+
+  function applyChanges(changes) {
+      changes.forEach(change => {
+          const els = document.querySelectorAll(change.selector);
+          els.forEach(el => {
+              if (change.property === 'innerText') el.innerText = change.value;
+              else if (change.property === 'innerHtml') el.innerHTML = change.value;
+              else if (el.style) el.style[change.property] = change.value;
+          });
+      });
+  }
+
+  function trackEvent(eventName, variant, value = 1) {
+      fetch(`${API_BASE}/trackPublicTestEvent`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+              testId: TEST_ID,
+              userId: userId,
+              eventName: eventName,
+              variant: variant,
+              value: value
+          })
+      }).catch(e => console.error('Track error', e));
+  }
+
+  initTest();
+})();
+</script>
     <title>BookOMedia</title>
   </head>
   <body>
